@@ -1059,21 +1059,24 @@ a {
 ========================================= */
 
 .site-footer {
+  margin-left: -16px;
+  margin-right: -16px;
+
   padding:
     42px
     20px
     max(38px, env(safe-area-inset-bottom));
 
   background: var(--background-deep);
-  border-top: 1px solid var(--border);
-  text-align: center;
 
-  margin-left: -16px;
-  margin-right: -16px;
+  border-top: 1px solid var(--border);
+
+  text-align: center;
 }
 
 .footer-inner {
   max-width: 680px;
+
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -1124,13 +1127,17 @@ a {
     width: min(calc(100% - 48px), 720px);
   }
 
-
   .quick-links {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .quick-link-card {
     min-height: 112px;
+  }
+
+  .site-footer {
+    margin-left: -24px;
+    margin-right: -24px;
   }
 
 }
@@ -1284,6 +1291,11 @@ a {
 
 .stay-weather-condition {
   display: none;
+}
+
+.site-footer {
+   margin-left: -11px;
+   margin-right: -11px;
 }
 
 }
