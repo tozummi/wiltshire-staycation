@@ -342,20 +342,43 @@ a {
   background: transparent;
 }
 
+
+/* Countdown remains inside its own card */
+
 .countdown-section {
   margin-top: -12px;
 }
 
-.countdown-frame {
-  height: 185px;
+.countdown-card {
+  width: 100%;
+
+  padding: 6px;
+
+  overflow: hidden;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+
+  box-shadow: var(--shadow-small);
 }
 
+.countdown-frame {
+  height: 175px;
+
+  border-radius: 24px;
+}
+
+
+/* Standalone widgets */
+
 .ratford-frame {
-  height: 650px;
+  height: 330px;
 }
 
 .prayer-frame {
-  height: 520px;
+  height: 285px;
 }
 
 .photo-widget-section {
@@ -363,7 +386,7 @@ a {
 }
 
 .photo-frame {
-  height: 680px;
+  height: 535px;
 }
 
 
