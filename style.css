@@ -857,3 +857,11 @@ a {
 .photo-widget-section {
   margin-bottom: 10px;
 }
+
+body {
+  background: red !important;
+}
+
+.widget {
+  background: blue !important;
+}
