@@ -409,49 +409,33 @@
 
 </section>
     
-  <!-- =========================
+    <!-- =========================
        FOOTER
   ========================== -->
 
   <footer class="site-footer">
 
-  <div class="footer-inner">
+    <div class="footer-inner">
 
-    <div class="footer-leaf" aria-hidden="true">🌿</div>
+      <div class="footer-leaf" aria-hidden="true">🌿</div>
 
-    <p>
-      Created with love by Ummi
-      <span aria-hidden="true">♡</span>
-    </p>
+      <p>
+        Created with love by Ummi
+        <span aria-hidden="true">♡</span>
+      </p>
 
-    <small>Ratford Bridge Farmhouse · August 2026</small>
+      <small>
+        Ratford Bridge Farmhouse · August 2026
+      </small>
 
-  </div>
+    </div>
 
-</footer>
+  </footer>
+
+</main>
 
 
-  <script src="script.js"></script>
-
-   <script>
-window.addEventListener("message", (event) => {
-
-  if (event.data?.type !== "activity-spinner-height") {
-    return;
-  }
-
-  const frame =
-    document.getElementById("activity-spinner-frame");
-
-  if (!frame) {
-    return;
-  }
-
-  frame.style.height =
-    `${event.data.height}px`;
-
-});
-   </script> 
+<!-- Scroll to top button -->
 
 <button
   class="scroll-to-top"
@@ -461,6 +445,29 @@ window.addEventListener("message", (event) => {
 >
   ↑
 </button>
-    
+
+
+<script src="script.js"></script>
+
+<script>
+  window.addEventListener("message", (event) => {
+
+    if (event.data?.type !== "activity-spinner-height") {
+      return;
+    }
+
+    const frame =
+      document.getElementById("activity-spinner-frame");
+
+    if (!frame) {
+      return;
+    }
+
+    frame.style.height =
+      `${event.data.height}px`;
+
+  });
+</script>
+
 </body>
 </html>
