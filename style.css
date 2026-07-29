@@ -111,7 +111,7 @@ a {
   padding:
     max(28px, env(safe-area-inset-top))
     0
-    72px;
+    0;
 }
 
 .page-section {
