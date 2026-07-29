@@ -429,5 +429,25 @@
 
   <script src="script.js"></script>
 
+   <script>
+window.addEventListener("message", (event) => {
+
+  if (event.data?.type !== "activity-spinner-height") {
+    return;
+  }
+
+  const frame =
+    document.getElementById("activity-spinner-frame");
+
+  if (!frame) {
+    return;
+  }
+
+  frame.style.height =
+    `${event.data.height}px`;
+
+});
+   </script> 
+    
 </body>
 </html>
