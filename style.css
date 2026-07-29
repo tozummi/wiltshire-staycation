@@ -1323,16 +1323,33 @@ a {
    ACTIVITY SPINNER EMBED
 ========================= */
 
+.activity-spinner-section {
+  overflow: hidden;
+}
+
 .activity-spinner-embed {
   width: 100%;
+  margin-top: 16px;
   overflow: hidden;
-  border-radius: 18px;
 }
 
 .activity-spinner-embed iframe {
   display: block;
   width: 100%;
-  height: 690px;
-  border: none;
+  height: 615px;
+
+  border: 0;
   background: transparent;
+}
+
+@media (max-width: 600px) {
+  .activity-spinner-embed iframe {
+    height: 560px;
+  }
+}
+
+@media (max-width: 390px) {
+  .activity-spinner-embed iframe {
+    height: 535px;
+  }
 }
