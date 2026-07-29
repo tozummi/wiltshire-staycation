@@ -46,6 +46,11 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+
+  /* Consistent website typography */
+  --section-title-size: clamp(2rem, 8vw, 2.75rem);
+  --section-title-line-height: 1.08;
+  --section-label-size: 0.73rem;
 }
 
 
@@ -423,7 +428,7 @@ a {
 
   color: var(--green);
 
-  font-size: 0.73rem;
+  font-size: var(--section-label-size);
   font-weight: 700;
 
   letter-spacing: 0.12em;
@@ -436,9 +441,9 @@ a {
   color: var(--green-dark);
 
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 8vw, 2.75rem);
+  font-size: var(--section-title-size);
   font-weight: 400;
-  line-height: 1.08;
+  line-height: var(--section-title-line-height);
   letter-spacing: -0.025em;
 }
 
@@ -473,7 +478,7 @@ a {
   justify-content: space-between;
   gap: 18px;
 
-  margin-bottom: 15px;
+  margin-bottom: 18px;
 }
 
 .stay-day-label {
@@ -484,7 +489,7 @@ a {
 
   color: var(--green);
 
-  font-size: 0.68rem;
+  font-size: var(--section-label-size);
   font-weight: 700;
 
   letter-spacing: 0.11em;
@@ -497,9 +502,9 @@ a {
   color: var(--green-dark);
 
   font-family: var(--font-heading);
-  font-size: clamp(1.65rem, 7vw, 2.15rem);
+  font-size: var(--section-title-size);
   font-weight: 400;
-  line-height: 1.05;
+  line-height: var(--section-title-line-height);
   letter-spacing: -0.025em;
 }
 
@@ -1230,14 +1235,6 @@ a {
   gap: 10px;
 
   margin-bottom: 12px;
-}
-
-.stay-weather-heading h2 {
-  font-size: 1.55rem;
-}
-
-.stay-day-label {
-  font-size: 0.59rem;
 }
 
 .stay-weather-date {
