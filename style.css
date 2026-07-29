@@ -1065,14 +1065,11 @@ a {
     max(38px, env(safe-area-inset-bottom));
 
   background: var(--background-deep);
-
   border-top: 1px solid var(--border);
-
   text-align: center;
 
-  margin-left: -20px;
-  margin-right: -20px; 
-   
+  margin-left: -16px;
+  margin-right: -16px;
 }
 
 .footer-inner {
