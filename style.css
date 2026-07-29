@@ -119,28 +119,33 @@ a {
 ========================================= */
 
 .hero {
-  padding:
-    20px
-    8px
-    30px;
-
   margin-bottom: 32px;
 
   text-align: center;
 }
 
+
+/* Main heading */
+
+.hero-copy {
+  padding:
+    10px
+    8px
+    23px;
+}
+
 .hero h1 {
-  max-width: 560px;
+  max-width: 620px;
 
   margin: 0 auto;
 
   color: var(--green-dark);
 
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 10vw, 4rem);
+  font-size: clamp(2.6rem, 11vw, 4.35rem);
   font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
 }
 
 .hero h1 span {
@@ -150,7 +155,7 @@ a {
 }
 
 .hero-text {
-  max-width: 460px;
+  max-width: 470px;
 
   margin:
     14px
@@ -159,12 +164,248 @@ a {
 
   color: var(--text-soft);
 
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   line-height: 1.55;
 }
 
+.hero-date-location {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+
+  margin:
+    13px
+    0
+    0;
+
+  color: var(--green);
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
 
 
+/* Property photograph */
+
+.hero-property-image {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 10;
+
+  overflow: hidden;
+
+  border-radius: var(--radius-large);
+
+  box-shadow: var(--shadow-medium);
+}
+
+.hero-property-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(32, 42, 31, 0.2),
+      transparent 42%
+    );
+}
+
+.hero-property-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transform: scale(1.01);
+}
+
+
+/* Check-in and checkout overlay */
+
+.hero-arrival {
+  position: absolute;
+  z-index: 2;
+
+  top: 14px;
+  right: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding:
+    8px
+    11px;
+
+  background:
+    rgba(39, 49, 37, 0.56);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 13px;
+
+  color: var(--white);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-arrival-item {
+  display: flex;
+  flex-direction: column;
+
+  text-align: left;
+}
+
+.hero-arrival-item span {
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  font-size: 0.55rem;
+  font-weight: 600;
+
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.hero-arrival-item strong {
+  font-family: var(--font-heading);
+  font-size: 0.94rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.hero-arrival-divider {
+  width: 1px;
+  height: 29px;
+
+  background:
+    rgba(255, 255, 255, 0.26);
+}
+
+
+/* Information beneath photograph */
+
+.hero-property-information {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  padding:
+    16px
+    4px
+    4px;
+
+  text-align: left;
+}
+
+.hero-property-name {
+  min-width: 0;
+}
+
+.hero-property-name span,
+.hero-property-name strong {
+  display: block;
+}
+
+.hero-property-name span {
+  margin-bottom: 2px;
+
+  color: var(--green);
+
+  font-size: 0.62rem;
+  font-weight: 700;
+
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.hero-property-name strong {
+  color: var(--green-dark);
+
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 5vw, 1.65rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+
+/* Guest information */
+
+.hero-guests {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  flex: 0 0 auto;
+}
+
+.hero-guest-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-guest-total strong {
+  color: var(--green-dark);
+
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.hero-guest-total span {
+  color: var(--text-soft);
+
+  font-size: 0.54rem;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.hero-guest-divider {
+  width: 1px;
+  height: 34px;
+
+  background: var(--border);
+}
+
+.hero-guest-breakdown {
+  display: flex;
+  flex-direction: column;
+
+  color: var(--text-soft);
+
+  font-size: 0.6rem;
+  line-height: 1.4;
+
+  white-space: nowrap;
+}
+
+.hero-guest-breakdown strong {
+  color: var(--green-dark);
+}
+
+
+/* Location button */
+
+.hero-location-button {
+  margin-top: 14px;
+}
 /* =========================================
    SECTION HEADINGS
 ========================================= */
@@ -666,15 +907,78 @@ a {
     width: min(calc(100% - 22px), 720px);
   }
 
-  .hero {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
+  .hero-copy {
+  padding:
+    6px
+    2px
+    20px;
+}
 
-  .hero-details {
-    flex-direction: column;
-    align-items: center;
-  }
+.hero h1 {
+  font-size: 2.35rem;
+}
+
+.hero-text {
+  max-width: 310px;
+
+  font-size: 0.75rem;
+}
+
+.hero-property-image {
+  aspect-ratio: 4 / 3;
+
+  border-radius: 23px;
+}
+
+.hero-arrival {
+  top: 9px;
+  right: 9px;
+
+  gap: 7px;
+
+  padding:
+    6px
+    8px;
+}
+
+.hero-arrival-item span {
+  font-size: 0.46rem;
+}
+
+.hero-arrival-item strong {
+  font-size: 0.8rem;
+}
+
+.hero-arrival-divider {
+  height: 24px;
+}
+
+.hero-property-information {
+  align-items: flex-start;
+  gap: 11px;
+
+  padding-top: 13px;
+}
+
+.hero-property-name span {
+  font-size: 0.53rem;
+}
+
+.hero-property-name strong {
+  font-size: 1.12rem;
+}
+
+.hero-guests {
+  gap: 7px;
+}
+
+.hero-guest-total strong {
+  font-size: 1.3rem;
+}
+
+.hero-guest-breakdown {
+  font-size: 0.52rem;
+}
 
   .feature-card {
     align-items: flex-start;
@@ -721,16 +1025,6 @@ a {
 
 /* Half the original space beneath countdown */
 .countdown-section {
-  margin-bottom: 29px;
-}
-
-/* Remove three-quarters of the gap between Ratford and location button */
-.ratford-section .primary-button {
-  margin-top: 4px;
-}
-
-/* Half the original space beneath the location button */
-.ratford-section {
   margin-bottom: 29px;
 }
 
