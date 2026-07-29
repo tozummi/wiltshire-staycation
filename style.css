@@ -1362,3 +1362,63 @@ a {
     height: 550px;
   }
 }
+
+
+/* =========================================
+   SCROLL TO TOP BUTTON
+========================================= */
+
+.scroll-to-top {
+  position: fixed;
+  z-index: 1000;
+
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+
+  display: grid;
+  place-items: center;
+
+  width: 46px;
+  height: 46px;
+
+  padding: 0;
+
+  background: var(--green-dark);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+
+  box-shadow:
+    0 8px 22px rgba(43, 57, 42, 0.22);
+
+  color: var(--white);
+
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(10px);
+
+  transition:
+    opacity 180ms ease,
+    visibility 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.scroll-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateY(0);
+}
+
+.scroll-to-top:active {
+  transform: scale(0.94);
+}
