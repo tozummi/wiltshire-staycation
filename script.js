@@ -175,7 +175,7 @@ function updateStayDayHeading() {
       "Our five-day stay";
 
     stayDayTitle.textContent =
-      "Weather in Wiltshire";
+      "Wiltshire Weather";
 
     stayWeatherDate.textContent =
       "17–21 August 2026";
