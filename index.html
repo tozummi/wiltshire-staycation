@@ -10,191 +10,395 @@
 
   <meta
     name="theme-color"
-    content="#f7f3e9"
+    content="#f8f5ed"
+  >
+
+  <meta
+    name="description"
+    content="Everything our family needs for our Wiltshire staycation at Ratford Bridge Farmhouse."
   >
 
   <title>Wiltshire Family Staycation</title>
+
+  <!-- Website fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap"
+    rel="stylesheet"
+  >
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
   <main class="site-container">
 
+    <!-- =========================
+         HERO
+    ========================== -->
+
     <header class="hero">
+
+      <div class="hero-decoration" aria-hidden="true">
+        <span>🌿</span>
+      </div>
+
       <p class="eyebrow">17–21 August 2026</p>
 
-      <h1>Wiltshire Family Staycation</h1>
+      <h1>
+        Wiltshire Family
+        <span>Staycation</span>
+      </h1>
 
       <p class="hero-text">
-        Everything we need for our family holiday, all in one place.
+        Everything we need for five lovely days together at
+        Ratford Bridge Farmhouse.
       </p>
+
+      <div class="hero-details">
+        <span>📍 Calne, Wiltshire</span>
+        <span>👨‍👩‍👧‍👦 24 guests</span>
+      </div>
+
     </header>
 
-    <section class="page-section">
-      <div class="section-heading">
-        <p class="section-label">Not long now</p>
-        <h2>Countdown</h2>
+
+    <!-- =========================
+         COUNTDOWN
+    ========================== -->
+
+    <section class="page-section countdown-section">
+
+      <div class="section-heading centred-heading">
+        <p class="section-label">The countdown is on</p>
+        <h2>Not Long Now</h2>
       </div>
 
-      <div class="widget-placeholder">
-        <p>Indify countdown widget will go here.</p>
+      <div class="widget-shell countdown-shell">
+
+        <iframe
+          class="widget-frame countdown-frame"
+          src="https://indify.co/widgets/live/countdown/yKmQDnGTktzMvKtDyIBe"
+          title="Countdown to our Wiltshire family staycation"
+          loading="eager"
+        ></iframe>
+
       </div>
+
     </section>
 
+
+    <!-- =========================
+         RATFORD INFORMATION
+    ========================== -->
+
     <section class="page-section">
+
       <div class="section-heading">
-        <p class="section-label">Our stay</p>
-        <h2>Weather &amp; Check-in</h2>
+        <p class="section-label">Our home for the week</p>
+        <h2>Ratford Bridge Farmhouse</h2>
+
+        <p class="section-introduction">
+          Check-in details, guest information and the forecast
+          for our stay.
+        </p>
       </div>
 
-      <div class="widget-placeholder">
-        <p>Ratford weather and check-in widget will go here.</p>
+      <div class="widget-shell">
+
+        <iframe
+          class="widget-frame ratford-frame"
+          src="https://tozummi.github.io/ratford-widget/"
+          title="Ratford Bridge Farmhouse weather and check-in information"
+          loading="lazy"
+        ></iframe>
+
       </div>
 
       <a
         class="primary-button"
-        href="#"
+        href="https://maps.app.goo.gl/6kG3ruKHhkQKDFJA8?g_st=ac"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span>📍</span>
-        Open House Location
+        <span class="button-icon">📍</span>
+
+        <span class="button-text">
+          <strong>Open House Location</strong>
+          <small>View directions in Google Maps</small>
+        </span>
+
+        <span class="button-arrow" aria-hidden="true">↗</span>
       </a>
+
     </section>
 
+
+    <!-- =========================
+         PRAYER TIMES
+    ========================== -->
+
     <section class="page-section">
+
       <div class="section-heading">
-        <p class="section-label">Daily information</p>
+        <p class="section-label">Daily worship</p>
         <h2>Prayer Times</h2>
+
+        <p class="section-introduction">
+          Today’s prayer times and Qibla direction for Calne.
+        </p>
       </div>
 
-      <div class="widget-placeholder">
-        <p>Prayer times widget will go here.</p>
+      <div class="widget-shell">
+
+        <iframe
+          class="widget-frame prayer-frame"
+          src="https://tozummi.github.io/calne-prayer-widget/"
+          title="Daily prayer times for Calne"
+          loading="lazy"
+        ></iframe>
+
       </div>
+
     </section>
 
+
+    <!-- =========================
+         PHOTO OF THE DAY
+    ========================== -->
+
     <section class="page-section">
-      <div class="section-heading">
-        <p class="section-label">Our memories</p>
+
+      <div class="section-heading centred-heading">
+        <p class="section-label">Wiltshire memories</p>
         <h2>Photo of the Day</h2>
       </div>
 
-      <div class="widget-placeholder">
-        <p>Photo of the Day widget will go here.</p>
+      <div class="photo-widget-area">
+
+        <iframe
+          class="widget-frame photo-frame"
+          src="https://tozummi.github.io/photo-of-the-day/"
+          title="Wiltshire family photo of the day"
+          loading="lazy"
+        ></iframe>
+
       </div>
+
     </section>
 
-    <section class="page-section">
+
+    <!-- =========================
+         QUICK LINKS
+    ========================== -->
+
+    <section class="page-section quick-links-section">
+
       <div class="section-heading">
-        <p class="section-label">Explore</p>
+        <p class="section-label">Everything in one place</p>
         <h2>Quick Links</h2>
+
+        <p class="section-introduction">
+          Find house information, plans for the week and everything
+          you need to bring.
+        </p>
       </div>
 
-      <div class="quick-links">
+      <nav class="quick-links" aria-label="Staycation pages">
 
-        <a class="quick-link-card" href="#">
-          <span class="quick-link-icon">🏡</span>
+        <a
+          class="quick-link-card"
+          href="pages/house.html"
+        >
+          <span class="quick-link-icon" aria-hidden="true">🏡</span>
 
           <span class="quick-link-content">
             <strong>About the House</strong>
             <small>Rooms, amenities and floor plans</small>
           </span>
 
-          <span class="quick-link-arrow">›</span>
+          <span class="quick-link-arrow" aria-hidden="true">›</span>
         </a>
 
-        <a class="quick-link-card" href="#">
-          <span class="quick-link-icon">⚠️</span>
+
+        <a
+          class="quick-link-card"
+          href="pages/rules.html"
+        >
+          <span class="quick-link-icon" aria-hidden="true">⚠️</span>
 
           <span class="quick-link-content">
             <strong>House Rules</strong>
             <small>Important rules and safety information</small>
           </span>
 
-          <span class="quick-link-arrow">›</span>
+          <span class="quick-link-arrow" aria-hidden="true">›</span>
         </a>
 
-        <a class="quick-link-card" href="#">
-          <span class="quick-link-icon">🎒</span>
-
-          <span class="quick-link-content">
-            <strong>Packing Lists</strong>
-            <small>Lists for everyone and the household</small>
-          </span>
-
-          <span class="quick-link-arrow">›</span>
-        </a>
-
-        <a class="quick-link-card" href="#">
-          <span class="quick-link-icon">🍽️</span>
-
-          <span class="quick-link-content">
-            <strong>Meal Plan</strong>
-            <small>Breakfast, lunches and dinners</small>
-          </span>
-
-          <span class="quick-link-arrow">›</span>
-        </a>
-
-        <a class="quick-link-card" href="#">
-          <span class="quick-link-icon">🦆</span>
-
-          <span class="quick-link-content">
-            <strong>Attractions</strong>
-            <small>Places to explore nearby</small>
-          </span>
-
-          <span class="quick-link-arrow">›</span>
-        </a>
 
         <a
           class="quick-link-card"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="pages/packing.html"
         >
-          <span class="quick-link-icon">📸</span>
+          <span class="quick-link-icon" aria-hidden="true">🎒</span>
+
+          <span class="quick-link-content">
+            <strong>Packing Lists</strong>
+            <small>Lists for adults, babies and the house</small>
+          </span>
+
+          <span class="quick-link-arrow" aria-hidden="true">›</span>
+        </a>
+
+
+        <a
+          class="quick-link-card"
+          href="pages/meals.html"
+        >
+          <span class="quick-link-icon" aria-hidden="true">🍽️</span>
+
+          <span class="quick-link-content">
+            <strong>Meal Plan</strong>
+            <small>Breakfast, lunches, dinners and shopping</small>
+          </span>
+
+          <span class="quick-link-arrow" aria-hidden="true">›</span>
+        </a>
+
+
+        <a
+          class="quick-link-card"
+          href="pages/attractions.html"
+        >
+          <span class="quick-link-icon" aria-hidden="true">🦆</span>
+
+          <span class="quick-link-content">
+            <strong>Attractions</strong>
+            <small>Places to visit and explore nearby</small>
+          </span>
+
+          <span class="quick-link-arrow" aria-hidden="true">›</span>
+        </a>
+
+
+        <a
+          class="quick-link-card album-link"
+          href="https://tozummi.github.io/wiltshire-family-album/"
+        >
+          <span class="quick-link-icon" aria-hidden="true">📸</span>
 
           <span class="quick-link-content">
             <strong>Family Photo Album</strong>
-            <small>View and upload family memories</small>
+            <small>View and upload our family memories</small>
           </span>
 
-          <span class="quick-link-arrow">›</span>
+          <span class="quick-link-arrow" aria-hidden="true">›</span>
         </a>
 
-      </div>
+      </nav>
+
     </section>
 
+
+    <!-- =========================
+         HOLIDAY CHALLENGES
+    ========================== -->
+
     <section class="page-section">
+
       <div class="section-heading">
-        <p class="section-label">Family fun</p>
+        <p class="section-label">A little family competition</p>
         <h2>Holiday Challenges</h2>
+
+        <p class="section-introduction">
+          Complete fun challenges together and make even more
+          memories during the week.
+        </p>
       </div>
 
-      <div class="content-card">
-        <p>The family holiday challenges will go here.</p>
+      <div class="feature-card challenges-card">
+
+        <div class="feature-card-icon" aria-hidden="true">
+          🏆
+        </div>
+
+        <div class="feature-card-content">
+          <p class="coming-soon-label">Coming soon</p>
+
+          <h3>Our Family Challenge Board</h3>
+
+          <p>
+            This section will hold the challenges, completed tasks
+            and family progress.
+          </p>
+        </div>
+
       </div>
+
     </section>
 
+
+    <!-- =========================
+         ACTIVITY SPINNER
+    ========================== -->
+
     <section class="page-section">
+
       <div class="section-heading">
-        <p class="section-label">Can’t decide?</p>
+        <p class="section-label">Can’t decide what to do?</p>
         <h2>Activity Spinner</h2>
+
+        <p class="section-introduction">
+          Let the wheel choose our next family activity.
+        </p>
       </div>
 
-      <div class="content-card">
-        <p>The activity spinner will go here.</p>
+      <div class="feature-card spinner-card">
+
+        <div class="spinner-preview" aria-hidden="true">
+          <span>🎲</span>
+        </div>
+
+        <div class="feature-card-content">
+          <p class="coming-soon-label">Coming soon</p>
+
+          <h3>Spin for an Activity</h3>
+
+          <p>
+            Indoor games, outdoor activities, family challenges
+            and evening ideas will all be added here.
+          </p>
+        </div>
+
       </div>
+
     </section>
 
   </main>
 
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer class="site-footer">
-    <p>Created with love by Ummi ♡</p>
+
+    <div class="footer-leaf" aria-hidden="true">🌿</div>
+
+    <p>
+      Created with love for our family staycation
+      <span aria-hidden="true">♡</span>
+    </p>
+
+    <small>Ratford Bridge Farmhouse · August 2026</small>
+
   </footer>
 
+
   <script src="script.js"></script>
+
 </body>
 </html>
