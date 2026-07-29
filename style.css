@@ -823,3 +823,37 @@ a {
   }
 
 }
+
+/* =========================================
+   HOMEPAGE WIDGET SPACING
+========================================= */
+
+/* One-third less space between hero card and countdown */
+.hero {
+  margin-bottom: 32px;
+}
+
+/* Half the original space beneath countdown */
+.countdown-section {
+  margin-bottom: 29px;
+}
+
+/* Remove three-quarters of the gap between Ratford and location button */
+.ratford-section .primary-button {
+  margin-top: 4px;
+}
+
+/* Half the original space beneath the location button */
+.ratford-section {
+  margin-bottom: 29px;
+}
+
+/* Remove seven-eighths of the space beneath Prayer Times */
+.prayer-section {
+  margin-bottom: 7px;
+}
+
+/* Remove five-sixths of the space beneath Photo of the Day */
+.photo-widget-section {
+  margin-bottom: 10px;
+}
