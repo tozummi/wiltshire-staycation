@@ -1336,7 +1336,7 @@ a {
 .activity-spinner-embed iframe {
   display: block;
   width: 100%;
-  height: 615px;
+  height: 630px;
 
   border: 0;
   background: transparent;
@@ -1344,12 +1344,12 @@ a {
 
 @media (max-width: 600px) {
   .activity-spinner-embed iframe {
-    height: 560px;
+    height: 575px;
   }
 }
 
 @media (max-width: 390px) {
   .activity-spinner-embed iframe {
-    height: 535px;
+    height: 550px;
   }
 }
