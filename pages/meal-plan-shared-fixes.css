@@ -1,0 +1,101 @@
+/* Meal Plan alignment with the shared information-page design system */
+
+.today-card,
+.planner-notice,
+.breakfast-section,
+.weekly-plan {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-small);
+}
+
+.today-card,
+.planner-notice,
+.breakfast-section,
+.weekly-plan,
+.meal-card,
+.departure-card {
+  border-radius: var(--radius-medium);
+}
+
+.today-card h2,
+.planner-notice h2,
+.section-heading h2,
+.breakfast-toggle strong,
+.breakfast-group h3,
+.day-heading h3,
+.meal-card__title-wrap h3,
+.meal-section h4,
+.departure-card h3,
+.action-card strong {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+.today-card h2,
+.planner-notice h2,
+.section-heading h2,
+.breakfast-toggle strong,
+.breakfast-group h3,
+.day-heading h3,
+.meal-card__title-wrap h3,
+.meal-section h4,
+.departure-card h3 {
+  color: var(--green-dark);
+}
+
+.today-card__label,
+.section-heading .eyebrow {
+  color: var(--green);
+}
+
+.today-card__content,
+.planner-notice p,
+.breakfast-toggle small,
+.breakfast-group ul,
+.day-heading p,
+.prepared-by,
+.meal-note,
+.departure-card p {
+  color: var(--text-soft);
+}
+
+.today-card__icon,
+.breakfast-group,
+.meal-note,
+.action-card--muted {
+  background: var(--surface-green);
+}
+
+.action-card,
+.primary-button,
+.day-tab[aria-selected="true"],
+.departure-list li::before {
+  background: var(--green-dark);
+}
+
+.action-card--muted {
+  color: var(--green-dark);
+  border-color: var(--border);
+}
+
+.day-tab,
+.meal-card,
+.meal-section + .meal-section,
+.breakfast-grid {
+  border-color: var(--border);
+}
+
+.meal-card {
+  background: var(--surface);
+}
+
+.weekly-plan {
+  margin-bottom: 42px;
+}
+
+@media (max-width: 600px) {
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+}
