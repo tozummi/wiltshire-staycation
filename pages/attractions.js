@@ -354,21 +354,21 @@ function renderGallery(attraction) {
 
   expectedFiles.forEach((src, index) => {
     const image = new Image();
-    image.alt = `${attraction.name} photo ${index + 1}`;
-    image.loading = index === 0 ? "eager" : "lazy";
-    image.decoding = "async";
-    image.src = src;
-    image.style.objectPosition = attraction.imagePositions[index] || "center";
+image.alt = `${attraction.name} photo ${index + 1}`;
+image.decoding = "async";
+image.style.objectPosition = attraction.imagePositions[index] || "center";
 
-    image.addEventListener("load", () => {
-      successfulSlides[index] = image;
-      completeImageCheck();
-    }, { once: true });
+image.addEventListener("load", () => {
+  successfulSlides[index] = image;
+  completeImageCheck();
+}, { once: true });
 
-    image.addEventListener("error", () => {
-      successfulSlides[index] = null;
-      completeImageCheck();
-    }, { once: true });
+image.addEventListener("error", () => {
+  successfulSlides[index] = null;
+  completeImageCheck();
+}, { once: true });
+
+image.src = src;
   });
 
   function completeImageCheck() {
