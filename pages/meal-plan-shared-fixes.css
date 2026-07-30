@@ -67,7 +67,10 @@
   background: var(--surface-green);
 }
 
-.action-card,
+.action-card {
+  background: var(--green-dark);
+}
+
 .primary-button,
 .day-tab[aria-selected="true"],
 .departure-list li::before {
@@ -75,8 +78,17 @@
 }
 
 .action-card--muted {
-  color: var(--green-dark);
+  background: var(--surface-green) !important;
   border-color: var(--border);
+  color: var(--green-dark);
+}
+
+.action-card--muted strong {
+  color: var(--green-dark);
+}
+
+.action-card--muted small {
+  color: var(--text-soft);
 }
 
 .day-tab,
