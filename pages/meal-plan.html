@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3eee5">
+  <title>Meal Plan | Wiltshire Staycation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="meal-plan.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-header">
+      <a class="back-link" href="../index.html"><span aria-hidden="true">←</span> Home</a>
+      <div class="title-block">
+        <p class="eyebrow">Wiltshire Staycation</p>
+        <h1>🍽️ Meal Plan</h1>
+        <p class="page-intro">A simple guide to breakfasts, lunches and dinners throughout our stay.</p>
+      </div>
+    </header>
+
+    <section id="todayCard" class="today-card" aria-live="polite">
+      <div class="today-card__icon" aria-hidden="true">⏳</div>
+      <div>
+        <p class="today-card__label">Staycation update</p>
+        <h2 id="todayTitle">Loading today's menu…</h2>
+        <div id="todayContent" class="today-card__content"></div>
+      </div>
+    </section>
+
+    <section class="action-grid" aria-label="Meal planning links">
+      <button class="action-card action-card--muted" type="button" aria-disabled="true">
+        <span class="action-card__icon" aria-hidden="true">🛒</span>
+        <span><strong>Shopping List</strong><small>Coming soon</small></span>
+      </button>
+
+      <a id="foodPlannerTopLink" class="action-card" href="#" target="_blank" rel="noopener noreferrer">
+        <span class="action-card__icon" aria-hidden="true">📊</span>
+        <span><strong>Family Food Planner</strong><small>Help us estimate quantities</small></span>
+      </a>
+    </section>
+
+    <section class="planner-notice">
+      <div class="planner-notice__icon" aria-hidden="true">📝</div>
+      <div>
+        <h2>Before the holiday shop…</h2>
+        <p>Please complete the Family Food Planner so we have a rough idea of quantities, what the children are likely to eat and where meals may overlap.</p>
+        <a id="foodPlannerNoticeLink" class="primary-button" href="#" target="_blank" rel="noopener noreferrer">
+          Open Food Planner <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="breakfast-section">
+      <button id="breakfastToggle" class="breakfast-toggle" type="button" aria-expanded="false" aria-controls="breakfastPanel">
+        <span><strong>🍞 Breakfast Menu</strong><small>Tap to view the everyday breakfast choices</small></span>
+        <span class="toggle-arrow" aria-hidden="true">⌄</span>
+      </button>
+      <div id="breakfastPanel" class="breakfast-panel" hidden>
+        <div id="breakfastGrid" class="breakfast-grid"></div>
+      </div>
+    </section>
+
+    <section class="weekly-plan">
+      <div class="section-heading">
+        <p class="eyebrow">Monday to Friday</p>
+        <h2>Daily Meals</h2>
+      </div>
+      <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Choose a day"></div>
+      <div id="dayPanel" class="day-panel" role="tabpanel"></div>
+    </section>
+  </main>
+  <script src="meal-plan.js"></script>
+</body>
+</html>
