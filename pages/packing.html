@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f5ed">
+  <meta name="description" content="Packing lists for our Wiltshire family staycation.">
+  <title>Packing Lists | Wiltshire Family Staycation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="page.css">
+  <link rel="stylesheet" href="packing.css">
+</head>
+
+<body data-packing-page="directory">
+  <main class="information-page">
+    <header class="page-header">
+      <a class="back-home" href="../index.html" aria-label="Go back to the staycation homepage">
+        <span aria-hidden="true">←</span>
+        <span>Back to Home</span>
+      </a>
+
+      <div class="page-heading">
+        <div class="page-icon" aria-hidden="true">🎒</div>
+        <p class="page-label">Get ready for the week</p>
+        <h1>Packing Lists</h1>
+        <p class="page-introduction">
+          Use a ready-made list, build a private custom list, or check the shared household items.
+        </p>
+      </div>
+    </header>
+
+    <div class="packing-shell">
+      <section id="pinned-list-section" class="pinned-list-section" hidden>
+        <p class="section-kicker">Quick access</p>
+        <div id="pinned-list-card"></div>
+      </section>
+
+      <section class="directory-section" aria-labelledby="templates-heading">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-kicker">Ready-made templates</p>
+            <h2 id="templates-heading">Choose a Packing List</h2>
+          </div>
+        </div>
+
+        <div class="directory-grid">
+          <a class="directory-card" href="packing-list.html?type=men">
+            <span class="directory-icon" aria-hidden="true">🧔🏻‍♂️</span>
+            <span class="directory-copy">
+              <strong>Men’s Packing List</strong>
+              <small>Clothing, toiletries, essentials and shared extras</small>
+            </span>
+            <span class="directory-arrow" aria-hidden="true">›</span>
+          </a>
+
+          <a class="directory-card" href="packing-list.html?type=women">
+            <span class="directory-icon" aria-hidden="true">🧕🏾</span>
+            <span class="directory-copy">
+              <strong>Women’s Packing List</strong>
+              <small>Clothing, toiletries, essentials and shared extras</small>
+            </span>
+            <span class="directory-arrow" aria-hidden="true">›</span>
+          </a>
+
+          <a class="directory-card" href="packing-list.html?type=babies">
+            <span class="directory-icon" aria-hidden="true">👶🏽</span>
+            <span class="directory-copy">
+              <strong>Babies’ & Children’s List</strong>
+              <small>Feeding, clothing, toiletries, amenities and food</small>
+            </span>
+            <span class="directory-arrow" aria-hidden="true">›</span>
+          </a>
+
+          <a class="directory-card directory-card--shared" href="packing-list.html?type=household">
+            <span class="directory-icon" aria-hidden="true">🏠</span>
+            <span class="directory-copy">
+              <strong>Shared Household List</strong>
+              <small>Live family checklist with “who’s bringing it?” assignments</small>
+            </span>
+            <span class="shared-badge">Shared</span>
+            <span class="directory-arrow" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="custom-directory-card" aria-labelledby="custom-heading">
+        <div class="custom-heading-row">
+          <div class="custom-heading-icon" aria-hidden="true">✨</div>
+          <div>
+            <p class="section-kicker">Make it your own</p>
+            <h2 id="custom-heading">My Custom Packing Lists</h2>
+          </div>
+        </div>
+
+        <div class="privacy-note">
+          <span aria-hidden="true">🔒</span>
+          <p>
+            <strong>Your custom lists are private.</strong>
+            They are saved only on this device and are not shared with anyone else,
+            so feel free to add personal reminders and private items.
+          </p>
+        </div>
+
+        <div class="storage-note">
+          <span aria-hidden="true">💾</span>
+          <p>
+            Clearing this website’s browsing data will delete your custom lists.
+            Export a backup if you would like to restore them later.
+          </p>
+        </div>
+
+        <div id="custom-list-cards" class="custom-list-cards"></div>
+
+        <div class="custom-actions">
+          <a id="create-custom-button" class="primary-packing-button" href="packing-custom.html">
+            + Create Custom List
+          </a>
+
+          <label class="secondary-packing-button import-button">
+            <span>⇩ Import List</span>
+            <input id="import-list-input" type="file" accept=".json,application/json" hidden>
+          </label>
+        </div>
+
+        <p id="custom-limit-note" class="custom-limit-note">
+          You can save up to two custom lists on this device.
+        </p>
+      </section>
+
+      <a class="bottom-home-button" href="../index.html">
+        <span class="bottom-home-icon" aria-hidden="true">←</span>
+        <span>
+          <strong>Back to Home</strong>
+          <small>Return to the staycation dashboard</small>
+        </span>
+      </a>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-leaf" aria-hidden="true">🌿</div>
+        <p>Created with love by Ummi <span aria-hidden="true">♡</span></p>
+        <small>Ratford Bridge Farmhouse · August 2026</small>
+      </div>
+    </footer>
+  </main>
+
+  <div id="confirm-modal" class="packing-modal-backdrop" hidden>
+    <section class="packing-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+      <button class="packing-modal-close" type="button" data-close-modal aria-label="Close">×</button>
+      <div class="packing-modal-icon" aria-hidden="true">⚠️</div>
+      <h2 id="confirm-modal-title">Are you sure?</h2>
+      <p id="confirm-modal-message"></p>
+      <div class="modal-actions">
+        <button id="confirm-cancel" class="secondary-packing-button" type="button">Cancel</button>
+        <button id="confirm-action" class="danger-button" type="button">Delete</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="toast" class="packing-toast" role="status" aria-live="polite"></div>
+
+  <button class="scroll-to-top" id="scroll-to-top" type="button" aria-label="Scroll back to the top">↑</button>
+
+  <script src="page.js"></script>
+  <script src="packing-data.js"></script>
+  <script src="packing.js"></script>
+</body>
+</html>
