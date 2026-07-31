@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f5ed">
+  <title>Shopping List | Wiltshire Family Staycation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="page.css">
+  <link rel="stylesheet" href="shopping.css">
+</head>
+<body>
+<main class="information-page">
+  <header class="page-header shopping-header">
+    <div class="header-row">
+      <a class="back-home" href="../index.html">← Back to Home</a>
+      <button id="editBtn" class="edit-btn" type="button" aria-label="Unlock organiser editing">✎</button>
+    </div>
+    <div class="page-heading">
+      <div class="page-icon">🛒</div>
+      <p class="page-label">Everything we need for the week</p>
+      <h1>Shopping List</h1>
+      <p class="page-introduction">Our shared checklist for Tesco, Costco and halal items brought from home.</p>
+    </div>
+  </header>
+
+  <div class="shopping-shell">
+    <section class="progress-card">
+      <div class="section-row">
+        <div><p class="kicker">Shopping progress</p><h2>Getting everything ready</h2></div>
+        <strong id="progressPercent">0%</strong>
+      </div>
+      <div id="progressTrack" class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progressFill"></div></div>
+      <p id="progressText">Loading the shopping list…</p>
+      <p id="editNotice" class="edit-notice" hidden>Organiser editing is unlocked.</p>
+    </section>
+
+    <section class="page-card shops-card">
+      <p class="kicker">Who is getting what?</p>
+      <h2>Shopping Arrangements</h2>
+      <p class="intro">The main shop can be delivered to the house, bulk items can come from Costco, and halal items can be bought beforehand.</p>
+      <div id="shopsGrid" class="shops-grid"><p class="loading">Loading arrangements…</p></div>
+    </section>
+
+    <section class="toolbar" aria-label="Shopping filters">
+      <div id="shopFilters" class="filter-scroll">
+        <button class="filter active" data-shop="all">All shops</button>
+        <button class="filter" data-shop="Tesco">Tesco</button>
+        <button class="filter" data-shop="Costco">Costco</button>
+        <button class="filter" data-shop="Halal Shop">Halal Shop</button>
+      </div>
+      <button id="remainingBtn" class="remaining-btn" type="button">Show remaining only</button>
+    </section>
+
+    <section class="list-section">
+      <div class="section-row list-title-row">
+        <div><p class="kicker">Category by category</p><h2>Our Shopping List</h2></div>
+        <button id="addItemBtn" class="small-btn" type="button" hidden>+ Add item</button>
+      </div>
+      <div id="categoryList" class="category-list"><div class="page-card loading-card">Loading the family shopping list…</div></div>
+    </section>
+
+    <section class="page-card suggestions-card">
+      <div class="suggestions-heading">
+        <div class="suggestion-icon">💭</div>
+        <div><p class="kicker">Have we forgotten something?</p><h2>Family Suggestions</h2><p>Add anything missing. Suggestions appear immediately so everyone can see them.</p></div>
+      </div>
+      <form id="suggestionForm" class="form-grid-main">
+        <label class="field wide">Item<input id="suggestionItem" maxlength="80" placeholder="e.g. Ice or foil trays" required></label>
+        <label class="field">Quantity <span>optional</span><input id="suggestionQuantity" maxlength="40" placeholder="e.g. 3 packs"></label>
+        <label class="field">Suggested by<input id="suggestionName" maxlength="50" placeholder="Your name" required></label>
+        <label class="field wide">Note <span>optional</span><textarea id="suggestionNote" maxlength="180" rows="3" placeholder="Anything useful to know"></textarea></label>
+        <button id="submitSuggestion" class="primary-btn wide" type="submit">Submit suggestion</button>
+      </form>
+      <div class="divider"></div>
+      <div class="section-row"><h3>Pending Suggestions</h3><span id="suggestionCount" class="count">0</span></div>
+      <div id="suggestionsList" class="suggestions-list"><p class="loading">Loading suggestions…</p></div>
+    </section>
+
+    <a class="bottom-home" href="../index.html"><span>←</span><span><strong>Back to Home</strong><small>Return to the staycation dashboard</small></span></a>
+  </div>
+
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-leaf">🌿</div><p>Created with love by Ummi ♡</p><small>Ratford Bridge Farmhouse · August 2026</small></div></footer>
+</main>
+
+<div id="pinModal" class="modal" hidden><div class="modal-card" role="dialog" aria-modal="true"><button class="close" data-close="pinModal">×</button><div class="modal-icon">✎</div><p class="kicker">Organiser access</p><h2>Unlock Editing</h2><p class="intro">Enter the organiser PIN to tick items and manage the shared list.</p><form id="pinForm"><div class="pin-wrap"><input id="pinInput" type="password" inputmode="numeric" maxlength="12" placeholder="Enter PIN" required><button id="eyeBtn" type="button" aria-label="Show PIN">👁</button></div><p id="pinError" class="error" hidden>That PIN is not correct.</p><button class="primary-btn full" type="submit">Unlock editing</button></form></div></div>
+
+<div id="itemModal" class="modal" hidden><div class="modal-card" role="dialog" aria-modal="true"><button class="close" data-close="itemModal">×</button><p class="kicker">Organiser tools</p><h2 id="itemModalTitle">Add Shopping Item</h2><form id="itemForm" class="modal-form"><input id="itemId" type="hidden"><label class="field">Item<input id="itemName" maxlength="80" required></label><div class="two-col"><label class="field">Quantity<input id="itemQuantity" maxlength="40"></label><label class="field">Shop<select id="itemShop"><option>Tesco</option><option>Costco</option><option>Halal Shop</option></select></label></div><label class="field">Category<select id="itemCategory"></select></label><button class="primary-btn full">Save item</button></form></div></div>
+
+<div id="shopModal" class="modal" hidden><div class="modal-card" role="dialog" aria-modal="true"><button class="close" data-close="shopModal">×</button><p class="kicker">Shopping arrangement</p><h2 id="shopModalTitle">Assign Shopper</h2><form id="shopForm" class="modal-form"><input id="shopId" type="hidden"><label class="field">Assigned to<input id="shopAssigned" maxlength="60" placeholder="Not assigned yet"></label><button class="primary-btn full">Save assignment</button></form></div></div>
+
+<div id="suggestionAddModal" class="modal" hidden><div class="modal-card" role="dialog" aria-modal="true"><button class="close" data-close="suggestionAddModal">×</button><p class="kicker">Add to the main list</p><h2 id="suggestionAddTitle">Add Suggestion</h2><form id="suggestionAddForm" class="modal-form"><input id="suggestionAddId" type="hidden"><label class="field">Item<input id="suggestionAddItem" maxlength="80" required></label><div class="two-col"><label class="field">Quantity<input id="suggestionAddQuantity" maxlength="40"></label><label class="field">Shop<select id="suggestionAddShop"><option>Tesco</option><option>Costco</option><option>Halal Shop</option></select></label></div><label class="field">Category<select id="suggestionAddCategory"></select></label><button class="primary-btn full">Add to shopping list</button></form></div></div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<button id="scroll-to-top" class="scroll-to-top" type="button" aria-label="Scroll back to the top">↑</button>
+<script src="page.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shopping.js"></script>
+</body>
+</html>
