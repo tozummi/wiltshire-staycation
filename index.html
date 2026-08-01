@@ -29,10 +29,13 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=7">
+  <noscript>
+    <style>body.page-loading { opacity: 1 !important; }</style>
+  </noscript>
 </head>
 
-<body>
+<body class="page-loading">
 
   <main class="site-container">
 
@@ -349,33 +352,191 @@
          HOLIDAY CHALLENGES
     ========================== -->
 
-    <section class="page-section">
+    <section class="page-section holiday-challenges-section" id="holiday-challenges">
 
       <div class="section-heading">
-        <p class="section-label">A little family competition</p>
+        <p class="section-label">A little holiday side quest</p>
         <h2>Holiday Challenges</h2>
 
         <p class="section-introduction">
-          Complete fun challenges together and make even more
-          memories during the week.
+          Can you complete all 15 before the staycation ends?
         </p>
       </div>
 
-      <div class="feature-card challenges-card">
+      <div class="challenges-card">
 
-        <div class="feature-card-icon" aria-hidden="true">
-          🏆
+        <div class="challenge-progress" aria-live="polite">
+          <div class="challenge-progress-heading">
+            <div>
+              <p class="challenge-progress-label">Your progress</p>
+              <strong id="challenge-progress-copy">0 / 15 completed</strong>
+            </div>
+
+            <span id="challenge-progress-celebration" class="challenge-progress-celebration" aria-hidden="true">🎉</span>
+          </div>
+
+          <div
+            id="challenge-progress-track"
+            class="challenge-progress-track"
+            role="progressbar"
+            aria-label="Holiday challenge progress"
+            aria-valuemin="0"
+            aria-valuemax="15"
+            aria-valuenow="0"
+          >
+            <div id="challenge-progress-fill" class="challenge-progress-fill"></div>
+            <span id="challenge-progress-trophy" class="challenge-progress-trophy" aria-hidden="true">🏆</span>
+          </div>
         </div>
 
-        <div class="feature-card-content">
-          <p class="coming-soon-label">Coming soon</p>
+        <div id="challenge-list" class="challenge-list">
 
-          <h3>Our Family Challenge Board</h3>
+          <section class="challenge-tier" aria-labelledby="challenge-tier-easy">
+            <div class="challenge-tier-heading">
+              <span class="challenge-tier-icon" aria-hidden="true">🌱</span>
+              <div>
+                <h3 id="challenge-tier-easy">Get Started</h3>
+                <p>A few simple moments to enjoy.</p>
+              </div>
+            </div>
 
-          <p>
-            This section will hold the challenges, completed tasks
-            and family progress.
-          </p>
+            <div class="challenge-items">
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="spot-sheep">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🐑</span>
+                <span class="challenge-text">Spot a sheep in a nearby field.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="visit-ducks">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🦆</span>
+                <span class="challenge-text">Visit the ducks by the river.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="pray-congregation">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🤲</span>
+                <span class="challenge-text">Pray one salah in congregation.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="farmhouse-selfie">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">📸</span>
+                <span class="challenge-text">Take a selfie somewhere around the farmhouse.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="sunrise-sunset">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🌅</span>
+                <span class="challenge-text">Watch a sunrise or a sunset.</span>
+              </label>
+            </div>
+          </section>
+
+          <section class="challenge-tier" aria-labelledby="challenge-tier-medium">
+            <div class="challenge-tier-heading">
+              <span class="challenge-tier-icon" aria-hidden="true">🌿</span>
+              <div>
+                <h3 id="challenge-tier-medium">Making Memories</h3>
+                <p>Join in and make the most of your stay.</p>
+              </div>
+            </div>
+
+            <div class="challenge-items">
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="visit-attraction">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🗺️</span>
+                <span class="challenge-text">Visit a local attraction from the Staycation Guide.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="help-meal">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🍳</span>
+                <span class="challenge-text">Help prepare or serve one family meal.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="board-game">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🎲</span>
+                <span class="challenge-text">Play a board game with at least three other people.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="album-photo">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">📷</span>
+                <span class="challenge-text">Upload one photo to the Family Album.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="walking-route">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🚶</span>
+                <span class="challenge-text">Explore a new walking route around the farmhouse.</span>
+              </label>
+            </div>
+          </section>
+
+          <section class="challenge-tier" aria-labelledby="challenge-tier-hard">
+            <div class="challenge-tier-heading">
+              <span class="challenge-tier-icon" aria-hidden="true">🌳</span>
+              <div>
+                <h3 id="challenge-tier-hard">Holiday Champion</h3>
+                <p>Complete these before the holiday ends.</p>
+              </div>
+            </div>
+
+            <div class="challenge-items">
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="fajr-sunrise">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🌄</span>
+                <span class="challenge-text">Pray Fajr and watch the sunrise afterwards.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="everyone-photo">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">👨‍👩‍👧‍👦</span>
+                <span class="challenge-text">Take one photo with everyone at the staycation.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="outdoor-game">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🏸</span>
+                <span class="challenge-text">Join in a family outdoor game.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="stargazing">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">✨</span>
+                <span class="challenge-text">Spend 10 minutes stargazing on a clear night.</span>
+              </label>
+
+              <label class="challenge-item">
+                <input type="checkbox" data-challenge-id="kindness">
+                <span class="challenge-check" aria-hidden="true"></span>
+                <span class="challenge-emoji" aria-hidden="true">🫶</span>
+                <span class="challenge-text">Do one random act of kindness for another family member.</span>
+              </label>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="challenge-footer">
+          <p>Saved on this device. Clearing site data resets your progress.</p>
+          <button id="reset-challenges" class="challenge-reset" type="button">Reset</button>
         </div>
 
       </div>
@@ -449,7 +610,7 @@
 </button>
 
 
-<script src="script.js"></script>
+<script src="script.js?v=7"></script>
 
 <script>
   window.addEventListener("message", (event) => {
