@@ -565,3 +565,13 @@ if (scrollToTopButton) {
 
   updateScrollToTopButton();
 }
+
+
+// Automatically hide the countdown after a chosen date/time
+const countdownSection = document.getElementById("countdown-section");
+
+const hideCountdownAt = new Date("2026-08-01T20:15:00+01:00");
+
+if (countdownSection && new Date() >= hideCountdownAt) {
+  countdownSection.remove();
+}
