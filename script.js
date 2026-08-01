@@ -575,3 +575,362 @@ const hideCountdownAt = new Date("2026-08-17T15:30:00+01:00");
 if (countdownSection && new Date() >= hideCountdownAt) {
   countdownSection.remove();
 }
+
+/* =========================================
+   HOLIDAY CHALLENGES
+========================================= */
+
+const HOLIDAY_CHALLENGES_STORAGE_KEY =
+  "wiltshireHolidayChallengesV1";
+
+const challengeCheckboxes = [
+  ...document.querySelectorAll(
+    "[data-challenge-id]"
+  )
+];
+
+const challengeProgressCopy =
+  document.getElementById(
+    "challenge-progress-copy"
+  );
+
+const challengeProgressFill =
+  document.getElementById(
+    "challenge-progress-fill"
+  );
+
+const challengeProgressTrophy =
+  document.getElementById(
+    "challenge-progress-trophy"
+  );
+
+const challengeProgressCelebration =
+  document.getElementById(
+    "challenge-progress-celebration"
+  );
+
+const challengeProgressTrack =
+  document.getElementById(
+    "challenge-progress-track"
+  );
+
+const resetChallengesButton =
+  document.getElementById(
+    "reset-challenges"
+  );
+
+
+function readChallengeProgress() {
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(
+        HOLIDAY_CHALLENGES_STORAGE_KEY
+      ) || "{}"
+    );
+
+    return saved && typeof saved === "object"
+      ? saved
+      : {};
+  } catch (error) {
+    console.warn(
+      "Could not read challenge progress:",
+      error
+    );
+
+    return {};
+  }
+}
+
+
+function saveChallengeProgress() {
+  const state = {};
+
+  challengeCheckboxes.forEach(checkbox => {
+    state[checkbox.dataset.challengeId] =
+      checkbox.checked;
+  });
+
+  try {
+    localStorage.setItem(
+      HOLIDAY_CHALLENGES_STORAGE_KEY,
+      JSON.stringify(state)
+    );
+  } catch (error) {
+    console.warn(
+      "Could not save challenge progress:",
+      error
+    );
+  }
+}
+
+
+function updateChallengeProgress() {
+  if (!challengeCheckboxes.length) {
+    return;
+  }
+
+  const completed = challengeCheckboxes.filter(
+    checkbox => checkbox.checked
+  ).length;
+
+  const total = challengeCheckboxes.length;
+  const percentage = total
+    ? (completed / total) * 100
+    : 0;
+
+  challengeCheckboxes.forEach(checkbox => {
+    checkbox
+      .closest(".challenge-item")
+      ?.classList.toggle(
+        "is-completed",
+        checkbox.checked
+      );
+  });
+
+  if (challengeProgressCopy) {
+    challengeProgressCopy.textContent =
+      `${completed} / ${total} completed`;
+  }
+
+  if (challengeProgressFill) {
+    challengeProgressFill.style.width =
+      `${percentage}%`;
+  }
+
+  if (challengeProgressTrophy) {
+    challengeProgressTrophy.style.left =
+      `${percentage}%`;
+
+    challengeProgressTrophy.classList.toggle(
+      "is-complete",
+      completed === total
+    );
+  }
+
+  if (challengeProgressCelebration) {
+    challengeProgressCelebration.classList.toggle(
+      "is-visible",
+      completed === total
+    );
+  }
+
+  if (challengeProgressTrack) {
+    challengeProgressTrack.setAttribute(
+      "aria-valuenow",
+      String(completed)
+    );
+  }
+
+  if (resetChallengesButton) {
+    resetChallengesButton.disabled =
+      completed === 0;
+  }
+}
+
+
+function restoreChallengeProgress() {
+  const saved = readChallengeProgress();
+
+  challengeCheckboxes.forEach(checkbox => {
+    checkbox.checked = Boolean(
+      saved[checkbox.dataset.challengeId]
+    );
+  });
+
+  updateChallengeProgress();
+}
+
+
+challengeCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener("change", () => {
+    saveChallengeProgress();
+    updateChallengeProgress();
+  });
+});
+
+
+if (resetChallengesButton) {
+  resetChallengesButton.addEventListener(
+    "click",
+    () => {
+      const shouldReset = window.confirm(
+        "Reset all holiday challenge progress on this device?"
+      );
+
+      if (!shouldReset) {
+        return;
+      }
+
+      challengeCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+
+      localStorage.removeItem(
+        HOLIDAY_CHALLENGES_STORAGE_KEY
+      );
+
+      updateChallengeProgress();
+    }
+  );
+}
+
+
+restoreChallengeProgress();
+
+
+/* =========================================
+   SUBTLE LOADING AND PAGE TRANSITIONS
+========================================= */
+
+function revealHomepage() {
+  document.body.classList.remove(
+    "page-loading"
+  );
+
+  document.body.classList.add(
+    "page-ready"
+  );
+}
+
+
+function setupSectionReveals() {
+  const sections = [
+    ...document.querySelectorAll(
+      ".page-section"
+    )
+  ];
+
+  if (
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches ||
+    !("IntersectionObserver" in window)
+  ) {
+    sections.forEach(section => {
+      section.classList.add("is-revealed");
+    });
+
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add(
+          "is-revealed"
+        );
+
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.08,
+      rootMargin: "0px 0px -30px"
+    }
+  );
+
+  sections.forEach(section => {
+    section.classList.add("reveal-ready");
+    observer.observe(section);
+  });
+}
+
+
+function setupWidgetLoading() {
+  const frames = [
+    ...document.querySelectorAll(
+      ".widget-frame, #activity-spinner-frame"
+    )
+  ];
+
+  frames.forEach(frame => {
+    const showFrame = () => {
+      frame.classList.add("is-loaded");
+    };
+
+    frame.addEventListener(
+      "load",
+      showFrame,
+      { once: true }
+    );
+
+    window.setTimeout(showFrame, 2200);
+  });
+}
+
+
+function setupInternalPageTransitions() {
+  if (
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
+  ) {
+    return;
+  }
+
+  document.addEventListener("click", event => {
+    const link = event.target.closest("a[href]");
+
+    if (
+      !link ||
+      link.target === "_blank" ||
+      link.hasAttribute("download") ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    const destination = new URL(
+      link.href,
+      window.location.href
+    );
+
+    if (
+      destination.origin !== window.location.origin ||
+      destination.hash ||
+      destination.pathname === window.location.pathname
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+
+    document.body.classList.add(
+      "page-leaving"
+    );
+
+    window.setTimeout(() => {
+      window.location.href = destination.href;
+    }, 150);
+  });
+}
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    setupSectionReveals();
+    setupWidgetLoading();
+    setupInternalPageTransitions();
+
+    window.requestAnimationFrame(
+      revealHomepage
+    );
+  }
+);
+
+
+window.addEventListener("pageshow", () => {
+  document.body.classList.remove(
+    "page-leaving"
+  );
+
+  revealHomepage();
+});
