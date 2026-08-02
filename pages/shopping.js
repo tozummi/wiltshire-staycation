@@ -4,11 +4,29 @@ const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const categories=[['Meat & Fish','🥩'],['Fruit & Vegetables','🥬'],['Dairy & Eggs','🥛'],['Bakery','🍞'],['Breakfast','🥣'],['Cupboard','🥫'],['Herbs & Spices','🧂'],['Drinks','🥤'],['Snacks','🍿'],['Household & Disposables','🧻']];
 const icons={Tesco:'🛒',Costco:'📦','Halal Shop':'🥩'};
 let items=[],suggestions=[],shops=[],pin='2468',editing=false,shopFilter='all',remainingOnly=false,channel;
+const SHOPPING_VIEW_KEY='wiltshireShoppingViewModeV1';
+let shoppingView=localStorage.getItem(SHOPPING_VIEW_KEY)==='detailed'?'detailed':'compact';
 const $=id=>document.getElementById(id), esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
 function toast(msg,error=false){const t=$('toast');t.textContent=msg;t.className='toast show'+(error?' error-toast':'');clearTimeout(t.timer);t.timer=setTimeout(()=>t.className='toast',3000)}
 function openModal(id){$(id).hidden=false;document.body.style.overflow='hidden';setTimeout(()=>$(id).querySelector('input:not([type=hidden]),select,button')?.focus(),30)}
 function closeModal(id){$(id).hidden=true;if(!document.querySelector('.modal:not([hidden])'))document.body.style.overflow=''}
 function fillCategories(){const o=categories.map(([n])=>`<option>${esc(n)}</option>`).join('');$('itemCategory').innerHTML=o;$('suggestionAddCategory').innerHTML=o}
+function applyShoppingView(){
+  document.body.classList.toggle('shopping-view-compact',shoppingView==='compact');
+  document.querySelectorAll('[data-shopping-view]').forEach(button=>{
+    button.classList.toggle('is-active',button.dataset.shoppingView===shoppingView);
+  });
+}
+function setupShoppingView(){
+  document.querySelectorAll('[data-shopping-view]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      shoppingView=button.dataset.shoppingView==='detailed'?'detailed':'compact';
+      localStorage.setItem(SHOPPING_VIEW_KEY,shoppingView);
+      applyShoppingView();
+    });
+  });
+  applyShoppingView();
+}
 async function loadAll(){await Promise.all([loadSettings(),loadShops(),loadItems(),loadSuggestions()]);setupRealtime()}
 async function loadSettings(){const{data,error}=await db.from('shopping_settings').select('value').eq('key','organiser_pin').maybeSingle();if(!error&&data)pin=data.value}
 async function loadShops(){const{data,error}=await db.from('shopping_shops').select('*').order('display_order');if(error)return toast('Shopping arrangements could not be loaded.',true);shops=data||[];renderShops()}
@@ -43,4 +61,8 @@ async function deleteSuggestion(id){const s=suggestions.find(x=>x.id===id);if(!c
 document.onclick=e=>{const b=e.target.closest('[data-close]');if(b)closeModal(b.dataset.close);else if(e.target.classList.contains('modal'))closeModal(e.target.id)};
 document.onkeydown=e=>{if(e.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>closeModal(m.id))};
 function setupRealtime(){if(channel)return;channel=db.channel('shopping-live').on('postgres_changes',{event:'*',schema:'public',table:'shopping_items'},loadItems).on('postgres_changes',{event:'*',schema:'public',table:'shopping_suggestions'},loadSuggestions).on('postgres_changes',{event:'*',schema:'public',table:'shopping_shops'},loadShops).subscribe()}
-fillCategories();$('suggestionName').value=localStorage.getItem('shoppingSuggestionName')||'';loadAll();
+fillCategories();
+$('suggestionName').value=localStorage.getItem('shoppingSuggestionName')||'';
+setupShoppingView();
+requestAnimationFrame(()=>document.body.classList.add('shopping-page-ready'));
+loadAll();
