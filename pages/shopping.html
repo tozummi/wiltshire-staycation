@@ -9,13 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="page.css">
-  <link rel="stylesheet" href="shopping.css">
+  <link rel="stylesheet" href="shopping.css?v=2">
 </head>
-<body>
+<body class="shopping-page-loading">
 <main class="information-page">
   <header class="page-header shopping-header">
     <div class="header-row">
-      <a class="back-home" href="../index.html">← Back to Home</a>
+      <a class="back-home" href="../index.html#quick-links" aria-label="Go back to the Quick Links section on the staycation homepage">
+        <span aria-hidden="true">←</span>
+        <span>Back to Home</span>
+      </a>
       <button id="editBtn" class="edit-btn" type="button" aria-label="Unlock organiser editing">✎</button>
     </div>
     <div class="page-heading">
@@ -35,6 +38,25 @@
       <div id="progressTrack" class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progressFill"></div></div>
       <p id="progressText">Loading the shopping list…</p>
       <p id="editNotice" class="edit-notice" hidden>Organiser editing is unlocked.</p>
+    </section>
+
+    <section class="shopping-view-card" aria-label="Shopping list view">
+      <div>
+        <p class="kicker">Choose your view</p>
+        <strong>List Layout</strong>
+      </div>
+
+      <div class="shopping-view-switcher" role="group" aria-label="Choose detailed or compact view">
+        <button class="shopping-view-option" type="button" data-shopping-view="detailed">
+          <span aria-hidden="true">▦</span>
+          Detailed
+        </button>
+
+        <button class="shopping-view-option is-active" type="button" data-shopping-view="compact">
+          <span aria-hidden="true">☷</span>
+          Compact
+        </button>
+      </div>
     </section>
 
     <section class="page-card shops-card">
@@ -79,7 +101,10 @@
       <div id="suggestionsList" class="suggestions-list"><p class="loading">Loading suggestions…</p></div>
     </section>
 
-    <a class="bottom-home" href="../index.html"><span>←</span><span><strong>Back to Home</strong><small>Return to the staycation dashboard</small></span></a>
+    <a class="bottom-back-link" href="../index.html#quick-links">
+      <span aria-hidden="true">←</span>
+      Back to Home
+    </a>
   </div>
 
   <footer class="site-footer"><div class="footer-inner"><div class="footer-leaf">🌿</div><p>Created with love by Ummi ♡</p><small>Ratford Bridge Farmhouse · August 2026</small></div></footer>
@@ -97,6 +122,6 @@
 <button id="scroll-to-top" class="scroll-to-top" type="button" aria-label="Scroll back to the top">↑</button>
 <script src="page.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="shopping.js"></script>
+<script src="shopping.js?v=2"></script>
 </body>
 </html>
