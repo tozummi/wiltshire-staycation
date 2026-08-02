@@ -9,9 +9,9 @@
   const VIEW_MODE_KEY = "wiltshirePackingViewModeV1";
 
   let viewMode =
-    localStorage.getItem(VIEW_MODE_KEY) === "compact"
-      ? "compact"
-      : "detailed";
+    localStorage.getItem(VIEW_MODE_KEY) === "detailed"
+      ? "detailed"
+      : "compact";
 
   let householdEditMode = false;
 
@@ -26,6 +26,14 @@
   let householdItems = [];
   let householdChannel = null;
   let currentCustomList = null;
+
+  const collapsedCategories = {
+    personal: new Set(),
+    household: new Set(),
+    custom: new Set()
+  };
+
+  let householdReloadTimer = null;
 
   function escapeHTML(value) {
     return String(value ?? "")
@@ -286,6 +294,8 @@
     const packedCount = category.items.filter(item => item.packed).length;
     const total = category.items.length;
     const isComplete = total > 0 && packedCount === total;
+    const stateGroup = options.stateGroup || "personal";
+    const isCollapsed = collapsedCategories[stateGroup].has(category.name);
 
     const note = category.note
       ? `<p class="category-note">${escapeHTML(category.note)}</p>`
@@ -383,11 +393,11 @@
         : "";
 
     return `
-      <article class="packing-category ${isComplete ? "is-complete" : ""}">
+      <article class="packing-category ${isComplete ? "is-complete" : ""} ${isCollapsed ? "is-collapsed" : ""}" data-category-name="${escapeHTML(category.name)}">
         <button
           class="packing-category-toggle"
           type="button"
-          aria-expanded="true"
+          aria-expanded="${String(!isCollapsed)}"
         >
           <span class="packing-category-icon" aria-hidden="true">
             ${escapeHTML(category.icon || "📦")}
@@ -436,13 +446,24 @@
     }).join("");
   }
 
-  function setupCategoryToggles(container) {
+  function setupCategoryToggles(container, stateGroup = "personal") {
     container.addEventListener("click", event => {
       const toggle = event.target.closest(".packing-category-toggle");
       if (!toggle) return;
 
+      // Editing controls inside the header should not collapse the category.
+      if (event.target.closest("[data-rename-household-category]")) return;
+
       const category = toggle.closest(".packing-category");
+      const categoryName = category.dataset.categoryName;
       const collapsed = category.classList.toggle("is-collapsed");
+
+      if (collapsed) {
+        collapsedCategories[stateGroup].add(categoryName);
+      } else {
+        collapsedCategories[stateGroup].delete(categoryName);
+      }
+
       toggle.setAttribute("aria-expanded", String(!collapsed));
     });
   }
@@ -496,7 +517,7 @@
           const isPinned = list.id === pinnedId;
 
           return `
-            <article class="custom-list-card">
+            <article class="custom-list-card" data-open-list="${list.id}" role="link" tabindex="0" aria-label="Open ${escapeHTML(list.name)}">
               <div class="custom-list-icon" aria-hidden="true">${isPinned ? "📌" : "✨"}</div>
 
               <div class="custom-list-copy">
@@ -530,6 +551,14 @@
     }
 
     customCards.addEventListener("click", event => {
+      const actionControl = event.target.closest("a, button");
+      const card = event.target.closest("[data-open-list]");
+
+      if (card && !actionControl) {
+        window.location.href = `packing-custom.html?id=${encodeURIComponent(card.dataset.openList)}`;
+        return;
+      }
+
       const pinButton = event.target.closest("[data-pin-list]");
 
       if (pinButton) {
@@ -611,6 +640,15 @@
           }
         });
       }
+    });
+
+
+customCards.addEventListener("keydown", event => {
+      const card = event.target.closest("[data-open-list]");
+      if (!card || (event.key !== "Enter" && event.key !== " ")) return;
+
+      event.preventDefault();
+      window.location.href = `packing-custom.html?id=${encodeURIComponent(card.dataset.openList)}`;
     });
 
     createButton.addEventListener("click", event => {
@@ -739,7 +777,9 @@
       document.querySelector(".progress-track").setAttribute("aria-valuenow", String(progress.percentage));
 
       progressGrid.innerHTML = createCategoryProgressMarkup(categories);
-      categoryContainer.innerHTML = categories.map(category => createCategoryMarkup(category)).join("");
+      categoryContainer.innerHTML = categories.map(category =>
+        createCategoryMarkup(category, { stateGroup: "personal" })
+      ).join("");
     }
 
     categoryContainer.addEventListener("change", event => {
@@ -757,7 +797,7 @@
       saveAndRender();
     });
 
-    setupCategoryToggles(categoryContainer);
+    setupCategoryToggles(categoryContainer, "personal");
 
     document.getElementById("reset-list-button").addEventListener("click", () => {
       showConfirm({
@@ -885,7 +925,7 @@
 
       progressGrid.innerHTML = createCategoryProgressMarkup(categories);
       categoryContainer.innerHTML = categories.map(category =>
-        createCategoryMarkup(category, { household: true })
+        createCategoryMarkup(category, { household: true, stateGroup: "household" })
       ).join("");
     }
 
@@ -1033,7 +1073,7 @@
       }
     });
 
-    setupCategoryToggles(categoryContainer);
+    setupCategoryToggles(categoryContainer, "household");
 
     toggleHouseholdEdit.addEventListener("click", () => {
       householdEditMode = !householdEditMode;
@@ -1174,7 +1214,10 @@
           schema: "public",
           table: "household_packing_items"
         },
-        () => loadItems()
+        () => {
+          clearTimeout(householdReloadTimer);
+          householdReloadTimer = setTimeout(loadItems, 120);
+        }
       )
       .subscribe();
 
@@ -1264,7 +1307,7 @@
         createCategoryProgressMarkup(currentCustomList.categories);
 
       categoriesContainer.innerHTML = currentCustomList.categories.map(category =>
-        createCategoryMarkup(category, { custom: true })
+        createCategoryMarkup(category, { custom: true, stateGroup: "custom" })
       ).join("");
 
       const isPinned = getPinnedListId() === currentCustomList.id;
@@ -1355,7 +1398,7 @@
     });
 
     const customContainer = document.getElementById("custom-packing-categories");
-    setupCategoryToggles(customContainer);
+    setupCategoryToggles(customContainer, "custom");
 
     customContainer.addEventListener("change", event => {
       const checkbox = event.target.closest("[data-check-item]");
@@ -1594,6 +1637,10 @@
 
   setupModalClosers();
   setupConfirmModal();
+
+  requestAnimationFrame(() => {
+    document.body.classList.add("packing-page-ready");
+  });
 
   if (pageType === "directory") {
     initialiseDirectoryPage();
