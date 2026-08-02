@@ -96,8 +96,23 @@
 }
 
 .rule-accordion-content > * {
-  margin-right: 21px;
-  margin-left: 21px;
+  margin: 0 24px;
+}
+
+.rule-accordion-content p,
+.rule-accordion-content ul,
+.rule-accordion-content ol,
+.rule-accordion-content li {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.rule-accordion-content > :first-child {
+  margin-top: 4px;
+}
+
+.rule-accordion-content > :last-child {
+  margin-bottom: 24px;
 }
 
 .rule-accordion-content > :first-child {
@@ -173,9 +188,8 @@
   }
 
   .rule-accordion-content > * {
-    margin-right: 17px;
-    margin-left: 17px;
-  }
+  margin: 0 20px;
+}
 
   .rule-accordion-content > :last-child {
     margin-bottom: 19px;
