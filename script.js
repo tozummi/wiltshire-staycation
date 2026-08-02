@@ -934,3 +934,34 @@ window.addEventListener("pageshow", () => {
 
   revealHomepage();
 });
+
+
+function centreQuickLinksFromHash() {
+  if (window.location.hash !== "#quick-links") {
+    return;
+  }
+
+  const quickLinksSection =
+    document.getElementById("quick-links");
+
+  if (!quickLinksSection) {
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    quickLinksSection.scrollIntoView({
+      behavior: "auto",
+      block: "center"
+    });
+  });
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  centreQuickLinksFromHash
+);
+
+window.addEventListener(
+  "hashchange",
+  centreQuickLinksFromHash
+);
