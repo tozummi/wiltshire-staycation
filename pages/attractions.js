@@ -435,4 +435,9 @@ function setInitialState() {
 
 setInitialState();
 
+
+requestAnimationFrame(() => {
+  document.body.classList.add("attractions-page-ready");
+});
+
 })();
