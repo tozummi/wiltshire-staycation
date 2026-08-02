@@ -232,8 +232,28 @@
 
 .pinned-list-card {
   margin-bottom: 18px;
+  padding: 13px 15px;
   background: linear-gradient(145deg, #f8f1e6, #fffdf8);
   box-shadow: var(--packing-shadow);
+  color: inherit;
+  text-decoration: none;
+}
+
+.pinned-list-card:hover,
+.pinned-list-card:focus,
+.pinned-list-card:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pinned-list-card .custom-list-copy strong {
+  color: var(--packing-green-dark);
+  text-decoration: none;
+}
+
+.pinned-list-card .custom-list-copy small {
+  color: var(--packing-muted);
+  text-decoration: none;
 }
 
 .custom-list-icon {
@@ -844,10 +864,13 @@
     display: none;
   }
 
-  .custom-list-card,
-  .pinned-list-card {
-    grid-template-columns: auto 1fr;
-  }
+  .custom-list-card {
+  grid-template-columns: auto 1fr;
+}
+
+.pinned-list-card {
+  grid-template-columns: auto 1fr auto;
+}
 
   .custom-list-actions {
     grid-column: 1 / -1;
