@@ -529,3 +529,62 @@
     transition-duration: 0.01ms;
   }
 }
+
+
+/* =========================================
+   ATTRACTIONS PAGE LOADING POLISH
+========================================= */
+
+.attractions-page-loading .information-page {
+  opacity: 0;
+  transform: translateY(7px);
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease;
+}
+
+.attractions-page-loading.attractions-page-ready .information-page {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bottom-back-link {
+  display: flex;
+  width: fit-content;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  margin: 28px auto 38px;
+  padding: 8px 14px;
+  background: rgba(255, 253, 248, 0.78);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bottom-back-link span:first-child {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.bottom-back-link:active {
+  transform: scale(0.97);
+}
+
+.bottom-back-link:focus-visible {
+  outline: 3px solid rgba(176, 139, 85, 0.38);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attractions-page-loading .information-page,
+  .attractions-page-loading.attractions-page-ready .information-page {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
