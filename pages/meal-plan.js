@@ -409,3 +409,8 @@ setupBreakfastToggle();
 renderTabs();
 renderActiveDay();
 renderTodayCard();
+
+
+requestAnimationFrame(() => {
+  document.body.classList.add("meal-page-ready");
+});
