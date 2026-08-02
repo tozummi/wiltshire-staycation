@@ -93,18 +93,7 @@
 .rule-accordion-content {
   min-height: 0;
   overflow: hidden;
-}
-
-.rule-accordion-content > * {
-  margin: 0 24px;
-}
-
-.rule-accordion-content p,
-.rule-accordion-content ul,
-.rule-accordion-content ol,
-.rule-accordion-content li {
-  margin-left: 0;
-  margin-right: 0;
+  padding: 0 24px 24px;
 }
 
 .rule-accordion-content > :first-child {
@@ -112,15 +101,12 @@
 }
 
 .rule-accordion-content > :last-child {
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
-.rule-accordion-content > :first-child {
-  margin-top: 1px;
-}
-
-.rule-accordion-content > :last-child {
-  margin-bottom: 22px;
+.rule-accordion-content ul,
+.rule-accordion-content ol {
+  padding-left: 22px;
 }
 
 .rule-card-accordion.is-open .rule-accordion-toggle {
@@ -187,8 +173,10 @@
     font-size: 1.24rem;
   }
 
-  .rule-accordion-content > * {
-  margin: 0 20px;
+  .rule-accordion-content {
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
 }
 
   .rule-accordion-content > :last-child {
