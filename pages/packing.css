@@ -1186,3 +1186,85 @@
     justify-content: flex-start;
   }
 }
+
+
+/* Packing-list polish: compact default, stable collapsed sections and loading */
+.packing-page-loading .information-page {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.packing-page-loading.packing-page-ready .information-page {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.packing-shell > section,
+.packing-shell > a {
+  animation: packing-section-in 360ms ease both;
+}
+
+.packing-shell > :nth-child(2) { animation-delay: 35ms; }
+.packing-shell > :nth-child(3) { animation-delay: 70ms; }
+.packing-shell > :nth-child(4) { animation-delay: 105ms; }
+
+@keyframes packing-section-in {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-list-card[data-open-list] {
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.custom-list-card[data-open-list]:active {
+  transform: scale(0.99);
+}
+
+.custom-list-card[data-open-list]:focus-visible {
+  outline: 2px solid var(--packing-green);
+  outline-offset: 3px;
+}
+
+/* Use the exact shared Attractions-page bottom navigation style. */
+.packing-shell .bottom-back-link {
+  margin-top: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .packing-page-loading .information-page,
+  .packing-page-loading.packing-page-ready .information-page,
+  .packing-shell > section,
+  .packing-shell > a {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+}
+
+
+/* Exact bottom Back to Home style used on the Attractions page. */
+.bottom-back-link {
+  display: flex;
+  width: fit-content;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  margin: 28px auto 38px;
+  padding: 8px 14px;
+  background: rgba(255, 253, 248, 0.78);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--green-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bottom-back-link:focus-visible {
+  outline: 3px solid rgba(176, 139, 85, 0.38);
+  outline-offset: 3px;
+}
