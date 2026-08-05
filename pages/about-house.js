@@ -184,80 +184,67 @@
   }
 
   function initialiseGallery() {
-    const gallery = document.getElementById("house-gallery");
-    const empty = document.getElementById("house-gallery-empty");
-    const swiperElement = document.querySelector(".house-swiper");
+  const gallery = document.getElementById("house-gallery");
+  const empty = document.getElementById("house-gallery-empty");
+  const swiperElement = document.querySelector(".house-swiper");
 
-    const loaded = [];
-    let checksComplete = 0;
+  if (!gallery || !empty || !swiperElement) return;
 
-    houseImages.forEach((item, index) => {
-      const image = new Image();
-      image.src = `images/house/${item.file}`;
-      image.alt = item.caption;
-      image.loading = index === 0 ? "eager" : "lazy";
-      image.decoding = "async";
-      image.style.objectPosition = item.position;
+  gallery.replaceChildren();
 
-      image.addEventListener("load", () => {
-        loaded[index] = { image, item };
-        finishCheck();
-      }, { once: true });
+  const fragment = document.createDocumentFragment();
 
-      image.addEventListener("error", () => {
-        loaded[index] = null;
-        finishCheck();
-      }, { once: true });
-    });
+  houseImages.forEach((item, index) => {
+    const slide = document.createElement("div");
+    slide.className = "swiper-slide";
 
-    function finishCheck() {
-      checksComplete += 1;
-      if (checksComplete !== houseImages.length) return;
+    const image = document.createElement("img");
+    image.src = `images/house/${item.file}`;
+    image.alt = item.caption;
+    image.loading = index === 0 ? "eager" : "lazy";
+    image.decoding = "async";
+    image.style.objectPosition = item.position || "center";
 
-      const available = loaded.filter(Boolean);
+    const counter = document.createElement("div");
+    counter.className = "house-slide-counter";
+    counter.textContent = `${index + 1} / ${houseImages.length}`;
 
-      if (!available.length) {
-        swiperElement.hidden = true;
-        empty.hidden = false;
-        return;
-      }
+    const caption = document.createElement("div");
+    caption.className = "house-slide-caption";
+    caption.textContent = item.caption;
 
-      const fragment = document.createDocumentFragment();
+    image.addEventListener(
+      "error",
+      () => {
+        console.error(`Could not load house image: ${item.file}`);
+        slide.remove();
+      },
+      { once: true }
+    );
 
-      available.forEach(({ image, item }, index) => {
-        const slide = document.createElement("div");
-        slide.className = "swiper-slide";
+    slide.append(image, counter, caption);
+    fragment.appendChild(slide);
+  });
 
-        const counter = document.createElement("div");
-        counter.className = "house-slide-counter";
-        counter.textContent = `${index + 1} / ${available.length}`;
+  gallery.appendChild(fragment);
+  swiperElement.hidden = false;
+  empty.hidden = true;
 
-        const caption = document.createElement("div");
-        caption.className = "house-slide-caption";
-        caption.textContent = item.caption;
-
-        slide.append(image, counter, caption);
-        fragment.appendChild(slide);
-      });
-
-      gallery.appendChild(fragment);
-
-      new Swiper(".house-swiper", {
-        slidesPerView: "auto",
-        centeredSlides: true,
-        spaceBetween: 15,
-        grabCursor: true,
-        effect: "coverflow",
-        coverflowEffect: {
-          rotate: 0,
-          stretch: 0,
-          depth: 120,
-          modifier: 1,
-          slideShadows: false
-        }
-      });
+  new Swiper(".house-swiper", {
+    slidesPerView: "auto",
+    centeredSlides: true,
+    spaceBetween: 15,
+    grabCursor: true,
+    effect: "coverflow",
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 0,
+      depth: 120,
+      modifier: 1,
+      slideShadows: false
     }
-  }
+  });
+}
 
   function createAccordion({ title, icon, items }) {
     const article = document.createElement("article");
