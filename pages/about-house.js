@@ -2,15 +2,41 @@
   "use strict";
 
   const houseImages = [
-    { file: "house-1.jpg", caption: "Ratford Bridge Farmhouse", position: "center" },
-    { file: "house-2.jpg", caption: "The main living space", position: "center" },
-    { file: "house-3.jpg", caption: "Kitchen and dining", position: "center" },
-    { file: "house-4.jpg", caption: "A comfortable bedroom", position: "center" },
-    { file: "house-5.jpg", caption: "The garden and outdoor space", position: "center" },
-    { file: "house-6.jpg", caption: "A place for the family to gather", position: "center" },
-    { file: "house-7.jpg", caption: "More of the farmhouse", position: "center" },
-    { file: "house-8.jpg", caption: "Around the property", position: "center" }
-  ];
+  { file: "Front of farmhouse.jpg", caption: "Front of farmhouse", position: "center" },
+  { file: "Patio behind farmhouse.jpg", caption: "Patio behind farmhouse", position: "center" },
+  { file: "Patio area left of farmhouse.jpg", caption: "Patio area left of farmhouse", position: "center" },
+  { file: "Fountain behind farmhouse.jpg", caption: "Fountain behind farmhouse", position: "center" },
+
+  { file: "Main hallway.jpg", caption: "Main hallway", position: "center" },
+  { file: "Main staircase in foyer.jpg", caption: "Main staircase in foyer", position: "center" },
+
+  { file: "Main kitchen.jpg", caption: "Main kitchen", position: "center" },
+  { file: "Dining space in main kitchen.jpg", caption: "Dining space in main kitchen", position: "center" },
+  { file: "Butler's kitchen.jpg", caption: "Butler's kitchen", position: "center" },
+  { file: "Dining room (seats 14).jpg", caption: "Dining room (seats 14)", position: "center" },
+
+  { file: "Living room with cinema projector.jpg", caption: "Living room with cinema projector", position: "center" },
+  { file: "Games room with pool table.jpg", caption: "Games room with pool table", position: "center" },
+
+  { file: "Main shared balcony (dual access).jpg", caption: "Main shared balcony", position: "center" },
+  { file: "Seating on main balcony.jpg", caption: "Seating on main balcony", position: "center" },
+  { file: "Workspace and access to main balcony.jpg", caption: "Workspace and access to main balcony", position: "center" },
+  { file: "Round balcony views.jpg", caption: "Round balcony views", position: "center" },
+
+  { file: "Bedroom 10.jpg", caption: "Bedroom 10", position: "center" },
+  { file: "Bedroom 9.jpg", caption: "Bedroom 9", position: "center" },
+  { file: "Bedroom 7.jpg", caption: "Bedroom 7", position: "center" },
+  { file: "Bedroom 6.jpg", caption: "Bedroom 6", position: "center" },
+  { file: "Bedroom 5.jpg", caption: "Bedroom 5", position: "center" },
+  { file: "Bedroom 4.jpg", caption: "Bedroom 4", position: "center" },
+  { file: "Bedroom 2.jpg", caption: "Bedroom 2", position: "center" },
+  { file: "Bedroom 1.jpg", caption: "Bedroom 1", position: "center" },
+
+  { file: "Ground floor washroom.jpg", caption: "Ground floor washroom", position: "center" },
+  { file: "Laundry room and boiler.jpg", caption: "Laundry room and boiler", position: "center" },
+
+  { file: "Patio.jpg", caption: "Patio", position: "center" }
+];
 
   const amenities = [
     {
