@@ -45,7 +45,7 @@
 }
 
 .section-heading--compact {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .section-kicker {
@@ -74,10 +74,12 @@
   line-height: 1.5;
 }
 
-/* Exact swipeable coverflow-card style reused from the gallery widget. */
+/* =========================================
+   HOUSE GALLERY
+========================================= */
 
 .house-gallery-section {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .house-carousel-container {
@@ -163,11 +165,13 @@
   font-size: 0.73rem;
 }
 
-/* At a glance */
+/* =========================================
+   AT A GLANCE — COMPACT LIST
+========================================= */
 
 .glance-card {
-  margin-bottom: 22px;
-  padding: 21px;
+  margin-bottom: 20px;
+  padding: 17px 18px;
   border: 1px solid var(--house-border);
   border-radius: var(--house-radius-large);
   background: var(--house-surface);
@@ -177,57 +181,64 @@
 .glance-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 9px;
+  gap: 5px 16px;
 }
 
 .glance-item {
   display: flex;
-  min-height: 46px;
+  min-width: 0;
+  min-height: 30px;
   align-items: center;
-  gap: 9px;
-  padding: 10px 11px;
-  border: 1px solid rgba(97, 116, 94, 0.12);
-  border-radius: 13px;
-  background: var(--house-surface-soft);
+  gap: 7px;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .glance-item span {
-  font-size: 1.05rem;
+  flex: 0 0 auto;
+  font-size: 0.92rem;
 }
 
 .glance-item strong {
+  min-width: 0;
   color: var(--house-green-dark);
-  font-size: 0.77rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
-/* Accordions */
+/* =========================================
+   COMPACT ACCORDIONS
+========================================= */
 
 .amenities-section,
 .viewer-section,
 .single-accordion-section {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .house-accordion-list {
   display: grid;
-  gap: 10px;
+  gap: 7px;
 }
 
 .house-accordion {
   overflow: hidden;
   border: 1px solid var(--house-border);
-  border-radius: var(--house-radius-medium);
+  border-radius: 14px;
   background: var(--house-surface);
-  box-shadow: var(--house-shadow);
+  box-shadow: 0 4px 14px rgba(53, 64, 51, 0.06);
 }
 
 .house-accordion-toggle {
   display: grid;
   width: 100%;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
-  padding: 16px 17px;
+  padding: 9px 12px;
   border: 0;
   background: transparent;
   color: inherit;
@@ -239,38 +250,50 @@
   display: flex;
   min-width: 0;
   align-items: center;
-  gap: 11px;
+  gap: 7px;
+  overflow: hidden;
   color: var(--house-green-dark);
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 0.88rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.house-accordion-title > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .house-accordion-icon {
   display: grid;
-  width: 39px;
-  height: 39px;
-  flex: 0 0 39px;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
   place-items: center;
-  border-radius: 13px;
+  border-radius: 9px;
   background: #eaf0e8;
   font-family: "DM Sans", sans-serif;
-  font-size: 1.05rem;
+  font-size: 0.86rem;
 }
 
 .house-accordion-helper {
   display: inline-flex;
+  min-width: 0;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px;
+  gap: 4px;
   color: var(--house-muted);
-  font-size: 0.67rem;
+  font-size: 0.57rem;
   font-weight: 600;
+  line-height: 1;
   white-space: nowrap;
 }
 
 .house-accordion-arrow {
+  flex: 0 0 auto;
   font-family: Georgia, serif;
-  font-size: 1rem;
+  font-size: 0.88rem;
   transition: transform 220ms ease;
 }
 
@@ -300,31 +323,33 @@
 .house-accordion-content {
   min-height: 0;
   overflow: hidden;
-  padding: 0 18px 18px;
+  padding: 0 13px 13px;
 }
 
 .amenity-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .amenity-tag {
-  padding: 8px 10px;
+  padding: 6px 8px;
   border: 1px solid rgba(97, 116, 94, 0.14);
   border-radius: 999px;
   background: var(--house-surface-soft);
   color: var(--house-text);
-  font-size: 0.73rem;
-  line-height: 1.35;
+  font-size: 0.67rem;
+  line-height: 1.3;
 }
 
-/* 3D viewer */
+/* =========================================
+   3D HOUSE VIEWER
+========================================= */
 
 .viewer-frame-wrap {
   position: relative;
   overflow: hidden;
-  min-height: 560px;
+  min-height: 0;
   border: 1px solid var(--house-border);
   border-radius: var(--house-radius-large);
   background: var(--house-surface-soft);
@@ -334,7 +359,7 @@
 .house-viewer {
   display: block;
   width: 100%;
-  height: 680px;
+  height: 540px;
   border: 0;
   opacity: 0;
   transition: opacity 300ms ease;
@@ -372,15 +397,17 @@
 }
 
 @keyframes viewer-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .plan-disclaimer {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 10px;
-  margin-top: 11px;
-  padding: 13px 14px;
+  margin-top: 9px;
+  padding: 11px 12px;
   border: 1px solid #e5d7bd;
   border-radius: 13px;
   background: #f8f1e6;
@@ -389,15 +416,17 @@
 .plan-disclaimer p {
   margin: 0;
   color: var(--house-muted);
-  font-size: 0.72rem;
-  line-height: 1.5;
+  font-size: 0.69rem;
+  line-height: 1.45;
 }
 
 .plan-disclaimer strong {
   color: var(--house-green-dark);
 }
 
-/* Bed table */
+/* =========================================
+   BED TABLE
+========================================= */
 
 .table-scroll {
   overflow-x: auto;
@@ -432,7 +461,9 @@
   border-bottom: 0;
 }
 
-/* Map */
+/* =========================================
+   NEARBY ESSENTIALS MAP
+========================================= */
 
 .map-introduction {
   margin: 0 0 10px;
@@ -483,7 +514,9 @@
   transform: rotate(45deg);
 }
 
-/* Rules shortcut and bottom navigation */
+/* =========================================
+   RULES SHORTCUT + BOTTOM NAVIGATION
+========================================= */
 
 .rules-shortcut {
   display: grid;
@@ -564,6 +597,10 @@
   outline-offset: 3px;
 }
 
+/* =========================================
+   RESPONSIVE
+========================================= */
+
 @media (min-width: 620px) {
   .about-house-shell {
     padding-inline: 22px;
@@ -579,33 +616,50 @@
   }
 
   .house-accordion-toggle {
-    padding: 17px 21px;
+    padding: 10px 14px;
   }
 
   .house-accordion-content {
-    padding: 0 21px 21px;
+    padding: 0 15px 15px;
+  }
+
+  .house-viewer {
+    height: 560px;
   }
 }
 
 @media (max-width: 520px) {
   .house-accordion-toggle {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  .house-accordion-title {
+    gap: 6px;
+    font-size: 0.8rem;
+  }
+
+  .house-accordion-icon {
+    width: 25px;
+    height: 25px;
+    flex-basis: 25px;
+    font-size: 0.78rem;
   }
 
   .house-accordion-helper {
-    justify-content: flex-end;
+    max-width: 100px;
+    overflow: hidden;
+    font-size: 0.52rem;
+    text-overflow: ellipsis;
   }
 
   .house-viewer {
-    height: 620px;
-  }
-
-  .viewer-frame-wrap {
-    min-height: 520px;
+    height: 500px;
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .about-house-shell {
     padding-inline: 12px;
   }
@@ -616,17 +670,35 @@
   }
 
   .glance-card {
-    padding: 18px;
+    padding: 15px 16px;
   }
 
   .glance-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 10px;
+  }
+
+  .glance-item strong {
+    font-size: 0.7rem;
+  }
+
+  .house-accordion-title {
+    font-size: 0.75rem;
+  }
+
+  .house-accordion-helper {
+    max-width: 86px;
+    font-size: 0.48rem;
   }
 
   .house-accordion-content {
-    padding-right: 16px;
-    padding-bottom: 16px;
-    padding-left: 16px;
+    padding-right: 11px;
+    padding-bottom: 11px;
+    padding-left: 11px;
+  }
+
+  .house-viewer {
+    height: 480px;
   }
 }
 
