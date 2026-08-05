@@ -129,51 +129,6 @@
     }
   ];
 
-  const nearbyPlaces = [
-    {
-      name: "Ratford Bridge Farmhouse",
-      icon: "🏡",
-      lat: 51.44796,
-      lng: -2.02888,
-      query: "Ratford Bridge Farmhouse Calne SN11 9JX"
-    },
-    {
-      name: "Tesco Superstore",
-      icon: "🛒",
-      lat: 51.4422,
-      lng: -2.0142,
-      query: "Tesco Superstore Beversbrook Road Calne SN11 9FQ"
-    },
-    {
-      name: "Tesco Petrol Station",
-      icon: "⛽",
-      lat: 51.4418,
-      lng: -2.0136,
-      query: "Tesco Petrol Station Beversbrook Road Calne SN11 9FQ"
-    },
-    {
-      name: "Tesco Café",
-      icon: "☕",
-      lat: 51.4425,
-      lng: -2.0140,
-      query: "Tesco Cafe Beversbrook Road Calne SN11 9FQ"
-    },
-    {
-      name: "Calne Pharmacy Area",
-      icon: "💊",
-      lat: 51.4380,
-      lng: -2.0052,
-      query: "Pharmacy Calne Wiltshire"
-    },
-    {
-      name: "Town Hall Bus Stop",
-      icon: "🚌",
-      lat: 51.43772,
-      lng: -2.00503,
-      query: "Town Hall bus stop New Road Calne"
-    }
-  ];
-
   function escapeHTML(value) {
     return String(value ?? "")
       .replaceAll("&", "&amp;")
@@ -330,48 +285,11 @@
     });
   }
 
-  function setupMap() {
-    if (!window.L) return;
-
-    const map = L.map("nearby-map", {
-      scrollWheelZoom: false,
-      zoomControl: true
-    }).setView([51.4440, -2.0170], 14);
-
-    window.nearbyMap = map;
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(map);
-
-    const bounds = [];
-
-    nearbyPlaces.forEach(place => {
-      const directions = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.query)}`;
-
-      L.marker([place.lat, place.lng], {
-        icon: createMarkerIcon(place.icon)
-      })
-        .addTo(map)
-        .bindPopup(`
-          <strong>${escapeHTML(place.icon)} ${escapeHTML(place.name)}</strong>
-          <a href="${directions}" target="_blank" rel="noopener noreferrer">Open directions ↗</a>
-        `);
-
-      bounds.push([place.lat, place.lng]);
-    });
-
-    map.fitBounds(bounds, {
-      padding: [28, 28],
-      maxZoom: 14
-    });
-  }
 
   initialiseGallery();
   setupAccordions();
   setupViewer();
-  setupMap();
+  
 
   requestAnimationFrame(() => {
     document.body.classList.add("about-house-page-ready");
