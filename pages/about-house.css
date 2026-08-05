@@ -1,0 +1,648 @@
+:root {
+  --house-surface: #fffdf8;
+  --house-surface-soft: #f4f0e7;
+  --house-green: #61745e;
+  --house-green-dark: #435641;
+  --house-green-light: #dce6d9;
+  --house-gold: #b08b55;
+  --house-text: #263127;
+  --house-muted: #697268;
+  --house-border: #e6e0d4;
+  --house-shadow: 0 8px 24px rgba(53, 64, 51, 0.08);
+  --house-radius-large: 24px;
+  --house-radius-medium: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.about-house-page-loading .information-page {
+  opacity: 0;
+  transform: translateY(7px);
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease;
+}
+
+.about-house-page-loading.about-house-page-ready .information-page {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-house-shell {
+  width: min(100%, 820px);
+  margin: 0 auto;
+  padding: 0 16px 34px;
+}
+
+.section-heading {
+  margin: 0 0 14px;
+}
+
+.section-heading--compact {
+  margin-bottom: 15px;
+}
+
+.section-kicker {
+  margin: 0 0 4px;
+  color: var(--house-green);
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.section-heading h2,
+.glance-card h2 {
+  margin: 0;
+  color: var(--house-green-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(1.48rem, 6vw, 1.85rem);
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+.section-heading p:last-child {
+  margin: 6px 0 0;
+  color: var(--house-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+/* Exact swipeable coverflow-card style reused from the gallery widget. */
+
+.house-gallery-section {
+  margin-bottom: 22px;
+}
+
+.house-carousel-container {
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  overflow: hidden;
+}
+
+.house-swiper {
+  width: 100%;
+  padding: 16px 0 13px;
+}
+
+.house-swiper .swiper-slide {
+  position: relative;
+  width: 85vw;
+  max-width: 380px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #ece9e1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.house-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.house-slide-caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 45px 18px 18px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+  color: white;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+}
+
+.house-slide-counter {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  line-height: 1;
+}
+
+.house-gallery-empty {
+  display: grid;
+  min-height: 210px;
+  margin: 10px 16px 0;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  border: 1px dashed var(--house-border);
+  border-radius: var(--house-radius-large);
+  background: var(--house-surface-soft);
+  color: var(--house-muted);
+  text-align: center;
+}
+
+.house-gallery-empty > span {
+  font-size: 1.7rem;
+}
+
+.house-gallery-empty strong {
+  color: var(--house-green-dark);
+}
+
+.house-gallery-empty small {
+  font-size: 0.73rem;
+}
+
+/* At a glance */
+
+.glance-card {
+  margin-bottom: 22px;
+  padding: 21px;
+  border: 1px solid var(--house-border);
+  border-radius: var(--house-radius-large);
+  background: var(--house-surface);
+  box-shadow: var(--house-shadow);
+}
+
+.glance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.glance-item {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 11px;
+  border: 1px solid rgba(97, 116, 94, 0.12);
+  border-radius: 13px;
+  background: var(--house-surface-soft);
+}
+
+.glance-item span {
+  font-size: 1.05rem;
+}
+
+.glance-item strong {
+  color: var(--house-green-dark);
+  font-size: 0.77rem;
+}
+
+/* Accordions */
+
+.amenities-section,
+.viewer-section,
+.single-accordion-section {
+  margin-bottom: 22px;
+}
+
+.house-accordion-list {
+  display: grid;
+  gap: 10px;
+}
+
+.house-accordion {
+  overflow: hidden;
+  border: 1px solid var(--house-border);
+  border-radius: var(--house-radius-medium);
+  background: var(--house-surface);
+  box-shadow: var(--house-shadow);
+}
+
+.house-accordion-toggle {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 17px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.house-accordion-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 11px;
+  color: var(--house-green-dark);
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+}
+
+.house-accordion-icon {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  flex: 0 0 39px;
+  place-items: center;
+  border-radius: 13px;
+  background: #eaf0e8;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.05rem;
+}
+
+.house-accordion-helper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  color: var(--house-muted);
+  font-size: 0.67rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.house-accordion-arrow {
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  transition: transform 220ms ease;
+}
+
+.house-accordion-toggle[aria-expanded="true"] .house-accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.house-accordion-toggle:focus-visible {
+  outline: 3px solid rgba(176, 139, 85, 0.38);
+  outline-offset: -4px;
+}
+
+.house-accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 260ms ease,
+    opacity 210ms ease;
+}
+
+.house-accordion.is-open .house-accordion-panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.house-accordion-content {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 18px 18px;
+}
+
+.amenity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.amenity-tag {
+  padding: 8px 10px;
+  border: 1px solid rgba(97, 116, 94, 0.14);
+  border-radius: 999px;
+  background: var(--house-surface-soft);
+  color: var(--house-text);
+  font-size: 0.73rem;
+  line-height: 1.35;
+}
+
+/* 3D viewer */
+
+.viewer-frame-wrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 560px;
+  border: 1px solid var(--house-border);
+  border-radius: var(--house-radius-large);
+  background: var(--house-surface-soft);
+  box-shadow: var(--house-shadow);
+}
+
+.house-viewer {
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: 0;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.viewer-frame-wrap.is-loaded .house-viewer {
+  opacity: 1;
+}
+
+.viewer-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  color: var(--house-muted);
+  font-size: 0.78rem;
+  transition: opacity 220ms ease;
+}
+
+.viewer-frame-wrap.is-loaded .viewer-loading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.viewer-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(97, 116, 94, 0.17);
+  border-top-color: var(--house-green);
+  border-radius: 50%;
+  animation: viewer-spin 800ms linear infinite;
+}
+
+@keyframes viewer-spin {
+  to { transform: rotate(360deg); }
+}
+
+.plan-disclaimer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  margin-top: 11px;
+  padding: 13px 14px;
+  border: 1px solid #e5d7bd;
+  border-radius: 13px;
+  background: #f8f1e6;
+}
+
+.plan-disclaimer p {
+  margin: 0;
+  color: var(--house-muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.plan-disclaimer strong {
+  color: var(--house-green-dark);
+}
+
+/* Bed table */
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--house-border);
+  border-radius: 13px;
+}
+
+.bed-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  background: var(--house-surface);
+  font-size: 0.75rem;
+}
+
+.bed-table th,
+.bed-table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--house-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.bed-table th {
+  background: #eaf0e8;
+  color: var(--house-green-dark);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+}
+
+.bed-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Map */
+
+.map-introduction {
+  margin: 0 0 10px;
+  color: var(--house-muted);
+  font-size: 0.73rem;
+  line-height: 1.45;
+}
+
+.nearby-map {
+  height: 365px;
+  overflow: hidden;
+  border: 1px solid var(--house-border);
+  border-radius: 14px;
+  background: #e7ebe3;
+}
+
+.nearby-map .leaflet-popup-content {
+  margin: 11px 13px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+}
+
+.nearby-map .leaflet-popup-content strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--house-green-dark);
+}
+
+.nearby-map .leaflet-popup-content a {
+  color: var(--house-green-dark);
+  font-weight: 700;
+}
+
+.emoji-map-marker {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 50% 50% 50% 12px;
+  background: var(--house-green-dark);
+  box-shadow: 0 5px 12px rgba(42, 52, 40, 0.25);
+  font-size: 1rem;
+  transform: rotate(-45deg);
+}
+
+.emoji-map-marker span {
+  transform: rotate(45deg);
+}
+
+/* Rules shortcut and bottom navigation */
+
+.rules-shortcut {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 13px;
+  align-items: center;
+  margin-top: 2px;
+  padding: 15px;
+  border: 1px solid var(--house-border);
+  border-radius: var(--house-radius-medium);
+  background: var(--house-surface);
+  box-shadow: var(--house-shadow);
+  color: inherit;
+  text-decoration: none;
+}
+
+.rules-shortcut-icon {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  place-items: center;
+  border-radius: 14px;
+  background: #f8f1e6;
+  font-size: 1.15rem;
+}
+
+.rules-shortcut strong,
+.rules-shortcut small {
+  display: block;
+}
+
+.rules-shortcut strong {
+  color: var(--house-green-dark);
+  font-size: 0.88rem;
+}
+
+.rules-shortcut small {
+  margin-top: 3px;
+  color: var(--house-muted);
+  font-size: 0.7rem;
+}
+
+.rules-shortcut-arrow {
+  color: var(--house-green);
+  font-family: Georgia, serif;
+  font-size: 1.55rem;
+}
+
+.bottom-back-link {
+  display: flex;
+  width: fit-content;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  margin: 28px auto 38px;
+  padding: 8px 14px;
+  border: 1px solid var(--house-border);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.78);
+  color: var(--house-green-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bottom-back-link span:first-child {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.bottom-back-link:active {
+  transform: scale(0.97);
+}
+
+.bottom-back-link:focus-visible {
+  outline: 3px solid rgba(176, 139, 85, 0.38);
+  outline-offset: 3px;
+}
+
+@media (min-width: 620px) {
+  .about-house-shell {
+    padding-inline: 22px;
+  }
+
+  .house-carousel-container {
+    width: calc(100% + 44px);
+    margin-left: -22px;
+  }
+
+  .glance-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .house-accordion-toggle {
+    padding: 17px 21px;
+  }
+
+  .house-accordion-content {
+    padding: 0 21px 21px;
+  }
+}
+
+@media (max-width: 520px) {
+  .house-accordion-toggle {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .house-accordion-helper {
+    justify-content: flex-end;
+  }
+
+  .house-viewer {
+    height: 620px;
+  }
+
+  .viewer-frame-wrap {
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-house-shell {
+    padding-inline: 12px;
+  }
+
+  .house-carousel-container {
+    width: calc(100% + 24px);
+    margin-left: -12px;
+  }
+
+  .glance-card {
+    padding: 18px;
+  }
+
+  .glance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .house-accordion-content {
+    padding-right: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-house-page-loading .information-page,
+  .about-house-page-loading.about-house-page-ready .information-page,
+  .house-viewer,
+  .viewer-loading,
+  .house-accordion-panel,
+  .house-accordion-arrow {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .viewer-spinner {
+    animation: none;
+  }
+}

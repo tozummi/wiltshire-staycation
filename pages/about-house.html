@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f5ed">
+  <meta name="description" content="A guide to Ratford Bridge Farmhouse, its amenities, rooms and nearby essentials.">
+
+  <title>About the House | Wiltshire Family Staycation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <link rel="stylesheet" href="page.css">
+  <link rel="stylesheet" href="about-house.css?v=1">
+</head>
+
+<body class="about-house-page about-house-page-loading">
+  <main class="information-page">
+
+    <header class="page-header">
+      <a class="back-home" href="../index.html#quick-links" aria-label="Go back to the Quick Links section on the staycation homepage">
+        <span aria-hidden="true">←</span>
+        <span>Back to Home</span>
+      </a>
+
+      <div class="page-heading">
+        <div class="page-icon" aria-hidden="true">🏡</div>
+        <p class="page-label">Your farmhouse guide</p>
+        <h1>About the House</h1>
+        <p class="page-introduction">
+          Take a look around Ratford Bridge Farmhouse and find everything you need for a comfortable stay.
+        </p>
+      </div>
+    </header>
+
+    <div class="about-house-shell">
+
+      <section class="house-gallery-section" aria-labelledby="house-gallery-heading">
+        <div class="section-heading">
+          <p class="section-kicker">Before you arrive</p>
+          <h2 id="house-gallery-heading">Take a Look Around</h2>
+          <p>Swipe through photos of the farmhouse and its main spaces.</p>
+        </div>
+
+        <div class="house-carousel-container">
+          <div class="swiper house-swiper" aria-label="House photo gallery">
+            <div class="swiper-wrapper" id="house-gallery"></div>
+          </div>
+
+          <div id="house-gallery-empty" class="house-gallery-empty" hidden>
+            <span aria-hidden="true">🖼️</span>
+            <strong>House photos coming soon</strong>
+            <small>Add the house images to <code>images/house/</code>.</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="glance-card" aria-labelledby="glance-heading">
+        <div class="section-heading section-heading--compact">
+          <p class="section-kicker">The essentials</p>
+          <h2 id="glance-heading">At a Glance</h2>
+        </div>
+
+        <div class="glance-grid">
+          <div class="glance-item"><span aria-hidden="true">👥</span><strong>Sleeps 22</strong></div>
+          <div class="glance-item"><span aria-hidden="true">🛏️</span><strong>10 Bedrooms</strong></div>
+          <div class="glance-item"><span aria-hidden="true">🚿</span><strong>9 Bathrooms</strong></div>
+          <div class="glance-item"><span aria-hidden="true">🚻</span><strong>1 Washroom</strong></div>
+          <div class="glance-item"><span aria-hidden="true">🚗</span><strong>Free Parking</strong></div>
+          <div class="glance-item"><span aria-hidden="true">📶</span><strong>Wi-Fi</strong></div>
+          <div class="glance-item"><span aria-hidden="true">🔑</span><strong>Self Check-in</strong></div>
+          <div class="glance-item"><span aria-hidden="true">🌊</span><strong>Riverfront</strong></div>
+          <div class="glance-item"><span aria-hidden="true">🔥</span><strong>BBQ</strong></div>
+        </div>
+      </section>
+
+      <section class="amenities-section" aria-labelledby="amenities-heading">
+        <div class="section-heading">
+          <p class="section-kicker">What is included</p>
+          <h2 id="amenities-heading">House Amenities</h2>
+          <p>Open a section to see the available facilities.</p>
+        </div>
+
+        <div id="amenities-list" class="house-accordion-list"></div>
+      </section>
+
+      <section class="viewer-section" aria-labelledby="viewer-heading">
+        <div class="section-heading">
+          <p class="section-kicker">Rooms and assignments</p>
+          <h2 id="viewer-heading">Explore the House</h2>
+          <p>Switch between floors to view the rooms and see where everyone is staying.</p>
+        </div>
+
+        <div class="viewer-frame-wrap">
+          <div class="viewer-loading" id="viewer-loading">
+            <span class="viewer-spinner" aria-hidden="true"></span>
+            <span>Loading the house explorer…</span>
+          </div>
+
+          <iframe
+            id="house-viewer"
+            class="house-viewer"
+            src="https://tozummi.github.io/ratford-house-explorer/"
+            title="Interactive 3D room and assignment viewer for Ratford Bridge Farmhouse"
+            loading="lazy"
+            allow="fullscreen"
+          ></iframe>
+        </div>
+
+        <aside class="plan-disclaimer">
+          <span aria-hidden="true">ⓘ</span>
+          <p>
+            <strong>About the house plan:</strong>
+            This model was recreated using floor plans and information shown in the property owner’s listing.
+            Some room sizes, layouts, doors, furnishings or other details may not be completely accurate.
+          </p>
+        </aside>
+      </section>
+
+      <section class="single-accordion-section">
+        <article class="house-accordion">
+          <button class="house-accordion-toggle" type="button" aria-expanded="false" aria-controls="bed-information-panel">
+            <span class="house-accordion-title">
+              <span class="house-accordion-icon" aria-hidden="true">🛏️</span>
+              <span>Bed Information</span>
+            </span>
+
+            <span class="house-accordion-helper">
+              <span class="house-helper-text">Tap to view details</span>
+              <span class="house-accordion-arrow" aria-hidden="true">⌄</span>
+            </span>
+          </button>
+
+          <div class="house-accordion-panel" id="bed-information-panel">
+            <div class="house-accordion-content">
+              <div class="table-scroll">
+                <table class="bed-table">
+                  <thead>
+                    <tr>
+                      <th>Floor</th>
+                      <th>Room</th>
+                      <th>Beds</th>
+                      <th>Staying Here</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Ground</td><td>Bedroom 10</td><td>King + sofa bed</td><td>Eesa and Deen 🧒🏾🧒🏾</td></tr>
+                    <tr><td>Ground</td><td>Bedroom 9</td><td>King</td><td>Abdus Salaam, Tanya and Saara 🧔🏾🧕🏾👧🏾</td></tr>
+                    <tr><td>First</td><td>Bedroom 8</td><td>King</td><td>Shumon and Mina 🧔🏾‍♂️🧕🏾</td></tr>
+                    <tr><td>First</td><td>Bedroom 7</td><td>King</td><td>Affa and Ruby 🧕🏾🧕🏾</td></tr>
+                    <tr><td>First</td><td>Bedroom 6</td><td>King</td><td>Ruji and Dawud 🧕🏾🧒🏾</td></tr>
+                    <tr><td>First</td><td>Bedroom 5</td><td>King</td><td>Yusuf, Ummi and Hidaayat 🧔🏾‍♂️👩🏾👶🏾</td></tr>
+                    <tr><td>First</td><td>Bedroom 4</td><td>King</td><td>Hasan and Khaleefah 👦🏾👦🏾</td></tr>
+                    <tr><td>First</td><td>Bedroom 3</td><td>King</td><td>Saheed, Naheda and Adam 🧔🏾‍♂️🧕🏾👶🏾</td></tr>
+                    <tr><td>Loft</td><td>Bedroom 2</td><td>Double</td><td>Zarin and Amani 🧕🏾🧕🏾</td></tr>
+                    <tr><td>Loft</td><td>Bedroom 1</td><td>Double + single</td><td>Naimah, Zaynab and Sameen 👩🏾👩🏾🧕🏾</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="single-accordion-section">
+        <article class="house-accordion">
+          <button class="house-accordion-toggle" type="button" aria-expanded="false" aria-controls="nearby-essentials-panel">
+            <span class="house-accordion-title">
+              <span class="house-accordion-icon" aria-hidden="true">📍</span>
+              <span>Nearby Essentials</span>
+            </span>
+
+            <span class="house-accordion-helper">
+              <span class="house-helper-text">Tap to view map</span>
+              <span class="house-accordion-arrow" aria-hidden="true">⌄</span>
+            </span>
+          </button>
+
+          <div class="house-accordion-panel" id="nearby-essentials-panel">
+            <div class="house-accordion-content">
+              <p class="map-introduction">
+                Tap a marker for its name and a directions link. Marker positions are intended as a quick local guide.
+              </p>
+              <div id="nearby-map" class="nearby-map" aria-label="Map of nearby essentials"></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <a class="rules-shortcut" href="rules.html">
+        <span class="rules-shortcut-icon" aria-hidden="true">⚠️</span>
+        <span>
+          <strong>House Rules &amp; Safety</strong>
+          <small>Read the important guidance for your stay</small>
+        </span>
+        <span class="rules-shortcut-arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="bottom-back-link" href="../index.html#quick-links">
+        <span aria-hidden="true">←</span>
+        Back to Home
+      </a>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-leaf" aria-hidden="true">🌿</div>
+        <p>Created with love by Ummi <span aria-hidden="true">♡</span></p>
+        <small>Ratford Bridge Farmhouse · August 2026</small>
+      </div>
+    </footer>
+  </main>
+
+  <button class="scroll-to-top" id="scroll-to-top" type="button" aria-label="Scroll back to the top">↑</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="page.js"></script>
+  <script src="about-house.js?v=1"></script>
+</body>
+</html>
