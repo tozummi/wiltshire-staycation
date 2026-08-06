@@ -1889,3 +1889,28 @@ body.page-leaving {
     transform: none;
   }
 }
+
+.footer-dev-note {
+  display: inline-block;
+
+  margin-top: 9px;
+
+  color: rgba(97, 116, 94, 0.34);
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.56rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.footer-dev-note:hover,
+.footer-dev-note:focus-visible {
+  color: rgba(97, 116, 94, 0.6);
+}
