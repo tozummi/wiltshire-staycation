@@ -19,7 +19,6 @@
         <span aria-hidden="true">←</span>
         <span>Back to Home</span>
       </a>
-      <button id="editBtn" class="edit-btn" type="button" aria-label="Unlock organiser editing">✎</button>
     </div>
     <div class="page-heading">
       <div class="page-icon">🛒</div>
@@ -30,15 +29,25 @@
   </header>
 
   <div class="shopping-shell">
-    <section class="progress-card">
-      <div class="section-row">
-        <div><p class="kicker">Shopping progress</p><h2>Getting everything ready</h2></div>
-        <strong id="progressPercent">0%</strong>
-      </div>
-      <div id="progressTrack" class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progressFill"></div></div>
-      <p id="progressText">Loading the shopping list…</p>
-      <p id="editNotice" class="edit-notice" hidden>Organiser editing is unlocked.</p>
-    </section>
+    <section class="progress-card progress-card--compact">
+  <div class="compact-progress-top">
+    <span class="kicker">Shopping progress</span>
+    <strong id="progressPercent">0%</strong>
+  </div>
+
+  <div
+    id="progressTrack"
+    class="progress-track"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+  >
+    <div id="progressFill"></div>
+  </div>
+
+  <p id="progressText">Loading the shopping list…</p>
+</section>
 
     <section class="shopping-view-card" aria-label="Shopping list view">
       <div>
@@ -59,12 +68,31 @@
       </div>
     </section>
 
-    <section class="page-card shops-card">
-      <p class="kicker">Who is getting what?</p>
-      <h2>Shopping Arrangements</h2>
-      <p class="intro">The main shop can be delivered to the house, bulk items can come from Costco, and halal items can be bought beforehand.</p>
-      <div id="shopsGrid" class="shops-grid"><p class="loading">Loading arrangements…</p></div>
-    </section>
+    <section class="shopping-arrangements">
+  <button
+    id="arrangementsToggle"
+    class="arrangements-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="arrangementsPanel"
+  >
+    <span>🛍️</span>
+    <strong>Shopping Arrangements</strong>
+    <small>Who is getting what?</small>
+    <span class="arrangements-arrow">⌄</span>
+  </button>
+
+  <div id="arrangementsPanel" class="arrangements-panel" hidden>
+    <p class="arrangements-intro">
+      The main shop can be delivered to the house, bulk items can come from Costco,
+      and halal items can be bought beforehand.
+    </p>
+
+    <div id="shopsGrid" class="shops-grid">
+      <p class="loading">Loading arrangements…</p>
+    </div>
+  </div>
+</section>
 
     <section class="toolbar" aria-label="Shopping filters">
       <div id="shopFilters" class="filter-scroll">
@@ -79,7 +107,10 @@
     <section class="list-section">
       <div class="section-row list-title-row">
         <div><p class="kicker">Category by category</p><h2>Our Shopping List</h2></div>
-        <button id="addItemBtn" class="small-btn" type="button" hidden>+ Add item</button>
+        <div class="shopping-list-actions">
+  <button id="exportTxtBtn" class="small-btn" type="button">⇩ Export TXT</button>
+  <button id="addItemBtn" class="small-btn" type="button">+ Add item</button>
+</div>
       </div>
       <div id="categoryList" class="category-list"><div class="page-card loading-card">Loading the family shopping list…</div></div>
     </section>
@@ -109,8 +140,6 @@
 
   <footer class="site-footer"><div class="footer-inner"><div class="footer-leaf">🌿</div><p>Created with love by Ummi ♡</p><small>Ratford Bridge Farmhouse · August 2026</small></div></footer>
 </main>
-
-<div id="pinModal" class="modal" hidden><div class="modal-card" role="dialog" aria-modal="true"><button class="close" data-close="pinModal">×</button><div class="modal-icon">✎</div><p class="kicker">Organiser access</p><h2>Unlock Editing</h2><p class="intro">Enter the organiser PIN to tick items and manage the shared list.</p><form id="pinForm"><div class="pin-wrap"><input id="pinInput" type="password" inputmode="numeric" maxlength="12" placeholder="Enter PIN" required><button id="eyeBtn" type="button" aria-label="Show PIN">👁</button></div><p id="pinError" class="error" hidden>That PIN is not correct.</p><button class="primary-btn full" type="submit">Unlock editing</button></form></div></div>
 
 <div id="itemModal" class="modal" hidden><div class="modal-card" role="dialog" aria-modal="true"><button class="close" data-close="itemModal">×</button><p class="kicker">Organiser tools</p><h2 id="itemModalTitle">Add Shopping Item</h2><form id="itemForm" class="modal-form"><input id="itemId" type="hidden"><label class="field">Item<input id="itemName" maxlength="80" required></label><div class="two-col"><label class="field">Quantity<input id="itemQuantity" maxlength="40"></label><label class="field">Shop<select id="itemShop"><option>Tesco</option><option>Costco</option><option>Halal Shop</option></select></label></div><label class="field">Category<select id="itemCategory"></select></label><button class="primary-btn full">Save item</button></form></div></div>
 
