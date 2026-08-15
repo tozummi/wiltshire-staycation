@@ -1,3 +1,6 @@
+/* Page must remain visible even if a later API call fails. */
+document.body.classList.add("shopping-page-ready");
+
 const SUPABASE_URL =
   "https://qoeiqvoaqqfheojaanad.supabase.co";
 
@@ -1661,11 +1664,7 @@ $("suggestionName").value =
 
 setupShoppingView();
 
-requestAnimationFrame(
-  () =>
-    document.body.classList.add(
-      "shopping-page-ready"
-    )
-);
-
-loadAll();
+loadAll().catch(error => {
+  console.error("Shopping page failed to initialise:", error);
+  toast("Some shopping features could not be loaded.", true);
+});
