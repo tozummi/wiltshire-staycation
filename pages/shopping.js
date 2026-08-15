@@ -1,68 +1,1671 @@
-const SUPABASE_URL="https://qoeiqvoaqqfheojaanad.supabase.co";
-const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvZWlxdm9hcXFmaGVvamFhbmFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0ODMzODEsImV4cCI6MjEwMDA1OTM4MX0.fAkhkc2m7VpVo5Z59LSAJK-_No0xNnt6eLX3U4oSPvg";
-const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-const categories=[['Meat & Fish','🥩'],['Fruit & Vegetables','🥬'],['Dairy & Eggs','🥛'],['Bakery','🍞'],['Breakfast','🥣'],['Cupboard','🥫'],['Herbs & Spices','🧂'],['Drinks','🥤'],['Snacks','🍿'],['Household & Disposables','🧻']];
-const icons={Tesco:'🛒',Costco:'📦','Halal Shop':'🥩'};
-let items=[],suggestions=[],shops=[],pin='2468',editing=false,shopFilter='all',remainingOnly=false,channel;
-const SHOPPING_VIEW_KEY='wiltshireShoppingViewModeV1';
-let shoppingView=localStorage.getItem(SHOPPING_VIEW_KEY)==='detailed'?'detailed':'compact';
-const $=id=>document.getElementById(id), esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-function toast(msg,error=false){const t=$('toast');t.textContent=msg;t.className='toast show'+(error?' error-toast':'');clearTimeout(t.timer);t.timer=setTimeout(()=>t.className='toast',3000)}
-function openModal(id){$(id).hidden=false;document.body.style.overflow='hidden';setTimeout(()=>$(id).querySelector('input:not([type=hidden]),select,button')?.focus(),30)}
-function closeModal(id){$(id).hidden=true;if(!document.querySelector('.modal:not([hidden])'))document.body.style.overflow=''}
-function fillCategories(){const o=categories.map(([n])=>`<option>${esc(n)}</option>`).join('');$('itemCategory').innerHTML=o;$('suggestionAddCategory').innerHTML=o}
-function applyShoppingView(){
-  document.body.classList.toggle('shopping-view-compact',shoppingView==='compact');
-  document.querySelectorAll('[data-shopping-view]').forEach(button=>{
-    button.classList.toggle('is-active',button.dataset.shoppingView===shoppingView);
-  });
+const SUPABASE_URL =
+  "https://qoeiqvoaqqfheojaanad.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvZWlxdm9hcXFmaGVvamFhbmFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0ODMzODEsImV4cCI6MjEwMDA1OTM4MX0.fAkhkc2m7VpVo5Z59LSAJK-_No0xNnt6eLX3U4oSPvg";
+
+const db =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* =========================================
+   SHOPPING CATEGORIES
+========================================= */
+
+const categories = [
+  ["Meat & Fish", "🥩"],
+  ["Fruit & Vegetables", "🥬"],
+  ["Dairy & Eggs", "🥛"],
+  ["Bakery", "🍞"],
+  ["Breakfast", "🥣"],
+  ["Cupboard", "🥫"],
+  ["Herbs & Spices", "🧂"],
+  ["Drinks", "🥤"],
+  ["Snacks", "🍿"],
+  ["Household & Disposables", "🧻"]
+];
+
+const icons = {
+  Tesco: "🛒",
+  Costco: "📦",
+  "Halal Shop": "🥩"
+};
+
+
+/* =========================================
+   STATE
+========================================= */
+
+let items = [];
+let suggestions = [];
+let shops = [];
+
+let shopFilter = "all";
+let remainingOnly = false;
+let channel;
+
+const SHOPPING_VIEW_KEY =
+  "wiltshireShoppingViewModeV1";
+
+let shoppingView =
+  localStorage.getItem(SHOPPING_VIEW_KEY) === "detailed"
+    ? "detailed"
+    : "compact";
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+const $ = id =>
+  document.getElementById(id);
+
+const esc = value =>
+  String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+
+function toast(message, error = false) {
+  const element = $("toast");
+
+  element.textContent = message;
+
+  element.className =
+    "toast show" +
+    (error ? " error-toast" : "");
+
+  clearTimeout(element.timer);
+
+  element.timer =
+    setTimeout(() => {
+      element.className = "toast";
+    }, 3000);
 }
-function setupShoppingView(){
-  document.querySelectorAll('[data-shopping-view]').forEach(button=>{
-    button.addEventListener('click',()=>{
-      shoppingView=button.dataset.shoppingView==='detailed'?'detailed':'compact';
-      localStorage.setItem(SHOPPING_VIEW_KEY,shoppingView);
-      applyShoppingView();
+
+
+function openModal(id) {
+  const modal = $(id);
+
+  if (!modal) return;
+
+  modal.hidden = false;
+
+  document.body.style.overflow = "hidden";
+
+  setTimeout(() => {
+    modal
+      .querySelector(
+        "input:not([type=hidden]), select, button"
+      )
+      ?.focus();
+  }, 30);
+}
+
+
+function closeModal(id) {
+  const modal = $(id);
+
+  if (!modal) return;
+
+  modal.hidden = true;
+
+  if (
+    !document.querySelector(
+      ".modal:not([hidden])"
+    )
+  ) {
+    document.body.style.overflow = "";
+  }
+}
+
+
+/* =========================================
+   CATEGORY SELECTS
+========================================= */
+
+function fillCategories() {
+  const options =
+    categories
+      .map(
+        ([name]) =>
+          `<option>${esc(name)}</option>`
+      )
+      .join("");
+
+  $("itemCategory").innerHTML = options;
+
+  $("suggestionAddCategory").innerHTML =
+    options;
+}
+
+
+/* =========================================
+   COMPACT / DETAILED VIEW
+========================================= */
+
+function applyShoppingView() {
+  document.body.classList.toggle(
+    "shopping-view-compact",
+    shoppingView === "compact"
+  );
+
+  document
+    .querySelectorAll("[data-shopping-view]")
+    .forEach(button => {
+      button.classList.toggle(
+        "is-active",
+        button.dataset.shoppingView ===
+          shoppingView
+      );
     });
-  });
+}
+
+
+function setupShoppingView() {
+  document
+    .querySelectorAll("[data-shopping-view]")
+    .forEach(button => {
+      button.addEventListener(
+        "click",
+        () => {
+          shoppingView =
+            button.dataset.shoppingView ===
+            "detailed"
+              ? "detailed"
+              : "compact";
+
+          localStorage.setItem(
+            SHOPPING_VIEW_KEY,
+            shoppingView
+          );
+
+          applyShoppingView();
+        }
+      );
+    });
+
   applyShoppingView();
 }
-async function loadAll(){await Promise.all([loadSettings(),loadShops(),loadItems(),loadSuggestions()]);setupRealtime()}
-async function loadSettings(){const{data,error}=await db.from('shopping_settings').select('value').eq('key','organiser_pin').maybeSingle();if(!error&&data)pin=data.value}
-async function loadShops(){const{data,error}=await db.from('shopping_shops').select('*').order('display_order');if(error)return toast('Shopping arrangements could not be loaded.',true);shops=data||[];renderShops()}
-async function loadItems(){const{data,error}=await db.from('shopping_items').select('*').order('category_order').order('display_order').order('created_at');if(error){$('categoryList').innerHTML='<div class="page-card loading-card">The shopping list could not be loaded.</div>';return}items=data||[];renderItems();renderProgress()}
-async function loadSuggestions(){const{data,error}=await db.from('shopping_suggestions').select('*').eq('status','pending').order('created_at',{ascending:false});if(error)return toast('Suggestions could not be loaded.',true);suggestions=data||[];renderSuggestions()}
-function renderShops(){$('shopsGrid').innerHTML=shops.length?shops.map(s=>`<article class="shop-card"><div class="shop-icon">${icons[s.name]||'🛍️'}</div><div class="shop-copy"><strong>${esc(s.name)}</strong><small>${esc(s.description||'')}</small><span class="assignment">Assigned to: <b>${esc(s.assigned_to||'Not assigned yet')}</b></span></div>${editing?`<button class="shop-edit" data-shop-edit="${s.id}" aria-label="Edit assignment">✎</button>`:''}</article>`).join(''):'<p class="loading">No arrangements yet.</p>'}
-function visibleItems(){return items.filter(i=>(shopFilter==='all'||i.shop===shopFilter)&&(!remainingOnly||!i.completed))}
-function renderItems(){const visible=visibleItems();$('categoryList').innerHTML=categories.map(([name,icon])=>{const all=items.filter(i=>i.category===name), shown=visible.filter(i=>i.category===name);if(shopFilter!=='all'&&!shown.length)return'';const done=all.filter(i=>i.completed).length;return`<article class="category"><button class="category-toggle" aria-expanded="true"><span class="category-icon">${icon}</span><span class="category-name"><strong>${esc(name)}</strong><small>${all.length?`${done} of ${all.length} bought`:'Nothing added yet'}</small></span><span>⌄</span></button><div class="category-items">${shown.length?shown.map(renderItem).join(''):'<p class="empty">No items for this filter.</p>'}</div></article>`}).join('')||'<div class="page-card loading-card">No items match this filter.</div>'}
-function renderItem(i){return`<div class="shopping-item ${i.completed?'done':''}"><input class="item-check" type="checkbox" data-toggle="${i.id}" ${i.completed?'checked':''} ${editing?'':'disabled'}><div class="item-copy"><span class="item-name">${esc(i.item)}</span><div class="item-meta">${i.quantity?`<span>${esc(i.quantity)}</span>`:''}<span class="shop-tag">${esc(i.shop)}</span></div></div>${editing?`<div class="item-actions"><button class="item-edit" data-edit="${i.id}">✎</button><button class="item-delete" data-delete="${i.id}">×</button></div>`:''}</div>`}
-function renderProgress(){const total=items.length,done=items.filter(i=>i.completed).length,pct=total?Math.round(done/total*100):0;$('progressPercent').textContent=pct+'%';$('progressFill').style.width=pct+'%';$('progressTrack').setAttribute('aria-valuenow',pct);$('progressText').textContent=total?`${done} of ${total} items bought`:'No shopping items yet.'}
-function setEditing(value){editing=value;document.body.classList.toggle('editing',value);$('editBtn').classList.toggle('unlocked',value);$('editBtn').textContent=value?'🔒':'✎';$('editNotice').hidden=!value;$('addItemBtn').hidden=!value;renderShops();renderItems();renderSuggestions()}
-$('editBtn').onclick=()=>editing?(setEditing(false),toast('Organiser editing locked.')):openModal('pinModal');
-$('pinForm').onsubmit=e=>{e.preventDefault();if($('pinInput').value.trim()!==pin){$('pinError').hidden=false;$('pinInput').select();return}closeModal('pinModal');setEditing(true);toast('Organiser editing unlocked.')};
-$('eyeBtn').onclick=()=>{$('pinInput').type=$('pinInput').type==='password'?'text':'password'};
-$('shopFilters').onclick=e=>{const b=e.target.closest('[data-shop]');if(!b)return;shopFilter=b.dataset.shop;document.querySelectorAll('[data-shop]').forEach(x=>x.classList.toggle('active',x===b));renderItems()};
-$('remainingBtn').onclick=()=>{remainingOnly=!remainingOnly;$('remainingBtn').classList.toggle('active',remainingOnly);$('remainingBtn').textContent=remainingOnly?'Showing remaining only':'Show remaining only';renderItems()};
-$('categoryList').onclick=async e=>{const cat=e.target.closest('.category-toggle');if(cat){const card=cat.closest('.category'),collapsed=card.classList.toggle('collapsed');cat.setAttribute('aria-expanded',!collapsed);return}const check=e.target.closest('[data-toggle]');if(check)return toggleItem(check.dataset.toggle,check.checked);const edit=e.target.closest('[data-edit]');if(edit)return openItem(edit.dataset.edit);const del=e.target.closest('[data-delete]');if(del)return deleteItem(del.dataset.delete)};
-async function toggleItem(id,completed){if(!editing)return;const item=items.find(i=>i.id===id);if(!item)return;item.completed=completed;renderItems();renderProgress();const{error}=await db.from('shopping_items').update({completed,completed_at:completed?new Date().toISOString():null}).eq('id',id);if(error){item.completed=!completed;renderItems();renderProgress();toast('Item could not be updated.',true)}}
-function openItem(id=''){const i=items.find(x=>x.id===id);$('itemForm').reset();$('itemId').value=i?.id||'';$('itemName').value=i?.item||'';$('itemQuantity').value=i?.quantity||'';$('itemShop').value=i?.shop||'Tesco';$('itemCategory').value=i?.category||categories[0][0];$('itemModalTitle').textContent=i?'Edit Shopping Item':'Add Shopping Item';openModal('itemModal')}
-$('addItemBtn').onclick=()=>openItem();
-$('itemForm').onsubmit=async e=>{e.preventDefault();if(!editing)return;const id=$('itemId').value,category=$('itemCategory').value,payload={item:$('itemName').value.trim(),quantity:$('itemQuantity').value.trim()||null,shop:$('itemShop').value,category,category_order:categories.findIndex(c=>c[0]===category)+1};let r;if(id)r=await db.from('shopping_items').update(payload).eq('id',id);else r=await db.from('shopping_items').insert({...payload,display_order:items.filter(i=>i.category===category).length+1});if(r.error)return toast('Item could not be saved.',true);closeModal('itemModal');await loadItems();toast(id?'Item updated.':'Item added.')};
-async function deleteItem(id){if(!editing)return;const i=items.find(x=>x.id===id);if(!i||!confirm(`Delete "${i.item}"?`))return;const{error}=await db.from('shopping_items').delete().eq('id',id);if(error)return toast('Item could not be deleted.',true);await loadItems();toast('Item deleted.')}
-$('shopsGrid').onclick=e=>{const b=e.target.closest('[data-shop-edit]');if(!b||!editing)return;const s=shops.find(x=>x.id===b.dataset.shopEdit);$('shopId').value=s.id;$('shopAssigned').value=s.assigned_to||'';$('shopModalTitle').textContent='Assign '+s.name;openModal('shopModal')};
-$('shopForm').onsubmit=async e=>{e.preventDefault();const{error}=await db.from('shopping_shops').update({assigned_to:$('shopAssigned').value.trim()||null}).eq('id',$('shopId').value);if(error)return toast('Assignment could not be saved.',true);closeModal('shopModal');await loadShops();toast('Assignment updated.')};
-$('suggestionForm').onsubmit=async e=>{e.preventDefault();const payload={item:$('suggestionItem').value.trim(),quantity:$('suggestionQuantity').value.trim()||null,suggested_by:$('suggestionName').value.trim(),note:$('suggestionNote').value.trim()||null,status:'pending'};$('submitSuggestion').disabled=true;const{error}=await db.from('shopping_suggestions').insert(payload);$('submitSuggestion').disabled=false;if(error)return toast('Suggestion could not be submitted.',true);localStorage.setItem('shoppingSuggestionName',payload.suggested_by);$('suggestionForm').reset();$('suggestionName').value=payload.suggested_by;await loadSuggestions();toast('Suggestion added.')};
-function renderSuggestions(){$('suggestionCount').textContent=suggestions.length;$('suggestionsList').innerHTML=suggestions.length?suggestions.map(s=>`<article class="suggestion"><div class="suggestion-top"><h4>${esc(s.item)}</h4><span>${esc(s.quantity||'')}</span></div>${s.note?`<p class="suggestion-note">“${esc(s.note)}”</p>`:''}<div class="suggestion-footer"><div><span class="suggestion-by">Suggested by ${esc(s.suggested_by)}</span><span class="suggestion-date">${new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(s.created_at))}</span></div>${editing?`<div class="suggestion-actions"><button class="suggestion-action" data-add-suggestion="${s.id}">+ Add</button><button class="suggestion-action" data-sort="${s.id}">Sorted</button><button class="suggestion-action danger" data-delete-suggestion="${s.id}">Delete</button></div>`:''}</div></article>`).join(''):'<p class="empty">No pending suggestions yet.</p>'}
-$('suggestionsList').onclick=async e=>{if(!editing)return;const add=e.target.closest('[data-add-suggestion]');if(add)return openSuggestion(add.dataset.addSuggestion);const sort=e.target.closest('[data-sort]');if(sort)return resolveSuggestion(sort.dataset.sort,'sorted');const del=e.target.closest('[data-delete-suggestion]');if(del)return deleteSuggestion(del.dataset.deleteSuggestion)};
-function openSuggestion(id){const s=suggestions.find(x=>x.id===id);$('suggestionAddId').value=s.id;$('suggestionAddItem').value=s.item;$('suggestionAddQuantity').value=s.quantity||'';$('suggestionAddShop').value='Tesco';$('suggestionAddCategory').value=categories[0][0];$('suggestionAddTitle').textContent='Add “'+s.item+'”';openModal('suggestionAddModal')}
-$('suggestionAddForm').onsubmit=async e=>{e.preventDefault();const category=$('suggestionAddCategory').value,payload={item:$('suggestionAddItem').value.trim(),quantity:$('suggestionAddQuantity').value.trim()||null,shop:$('suggestionAddShop').value,category,category_order:categories.findIndex(c=>c[0]===category)+1,display_order:items.filter(i=>i.category===category).length+1};const{error}=await db.from('shopping_items').insert(payload);if(error)return toast('Suggestion could not be added.',true);await resolveSuggestion($('suggestionAddId').value,'added',false);closeModal('suggestionAddModal');await loadItems();toast('Suggestion added to the list.')};
-async function resolveSuggestion(id,status,notify=true){const{error}=await db.from('shopping_suggestions').update({status,resolved_at:new Date().toISOString()}).eq('id',id);if(error)return toast('Suggestion could not be updated.',true);await loadSuggestions();if(notify)toast('Suggestion marked as sorted.')}
-async function deleteSuggestion(id){const s=suggestions.find(x=>x.id===id);if(!confirm(`Delete "${s.item}"?`))return;const{error}=await db.from('shopping_suggestions').delete().eq('id',id);if(error)return toast('Suggestion could not be deleted.',true);await loadSuggestions();toast('Suggestion deleted.')}
-document.onclick=e=>{const b=e.target.closest('[data-close]');if(b)closeModal(b.dataset.close);else if(e.target.classList.contains('modal'))closeModal(e.target.id)};
-document.onkeydown=e=>{if(e.key==='Escape')document.querySelectorAll('.modal:not([hidden])').forEach(m=>closeModal(m.id))};
-function setupRealtime(){if(channel)return;channel=db.channel('shopping-live').on('postgres_changes',{event:'*',schema:'public',table:'shopping_items'},loadItems).on('postgres_changes',{event:'*',schema:'public',table:'shopping_suggestions'},loadSuggestions).on('postgres_changes',{event:'*',schema:'public',table:'shopping_shops'},loadShops).subscribe()}
+
+
+/* =========================================
+   LOAD DATA
+========================================= */
+
+async function loadAll() {
+  await Promise.all([
+    loadShops(),
+    loadItems(),
+    loadSuggestions()
+  ]);
+
+  setupRealtime();
+}
+
+
+async function loadShops() {
+  const { data, error } =
+    await db
+      .from("shopping_shops")
+      .select("*")
+      .order("display_order");
+
+  if (error) {
+    toast(
+      "Shopping arrangements could not be loaded.",
+      true
+    );
+
+    return;
+  }
+
+  shops = data || [];
+
+  renderShops();
+}
+
+
+async function loadItems() {
+  const { data, error } =
+    await db
+      .from("shopping_items")
+      .select("*")
+      .order("category_order")
+      .order("display_order")
+      .order("created_at");
+
+  if (error) {
+    $("categoryList").innerHTML = `
+      <div class="page-card loading-card">
+        The shopping list could not be loaded.
+      </div>
+    `;
+
+    return;
+  }
+
+  items = data || [];
+
+  renderItems();
+  renderProgress();
+}
+
+
+async function loadSuggestions() {
+  const { data, error } =
+    await db
+      .from("shopping_suggestions")
+      .select("*")
+      .eq("status", "pending")
+      .order(
+        "created_at",
+        { ascending: false }
+      );
+
+  if (error) {
+    toast(
+      "Suggestions could not be loaded.",
+      true
+    );
+
+    return;
+  }
+
+  suggestions = data || [];
+
+  renderSuggestions();
+}
+
+
+/* =========================================
+   SHOPPING ARRANGEMENTS
+========================================= */
+
+function renderShops() {
+  $("shopsGrid").innerHTML =
+    shops.length
+      ? shops
+          .map(
+            shop => `
+              <article class="shop-card">
+
+                <div class="shop-icon">
+                  ${icons[shop.name] || "🛍️"}
+                </div>
+
+                <div class="shop-copy">
+                  <strong>
+                    ${esc(shop.name)}
+                  </strong>
+
+                  <small>
+                    ${esc(shop.description || "")}
+                  </small>
+
+                  <span class="assignment">
+                    Assigned to:
+                    <b>
+                      ${esc(
+                        shop.assigned_to ||
+                        "Not assigned yet"
+                      )}
+                    </b>
+                  </span>
+                </div>
+
+                <button
+                  class="shop-edit"
+                  data-shop-edit="${shop.id}"
+                  aria-label="Edit assignment"
+                  type="button"
+                >
+                  ✎
+                </button>
+
+              </article>
+            `
+          )
+          .join("")
+      : `<p class="loading">
+           No arrangements yet.
+         </p>`;
+}
+
+
+/* =========================================
+   ARRANGEMENTS ACCORDION
+========================================= */
+
+const arrangementsToggle =
+  $("arrangementsToggle");
+
+const arrangementsPanel =
+  $("arrangementsPanel");
+
+if (
+  arrangementsToggle &&
+  arrangementsPanel
+) {
+  arrangementsToggle.addEventListener(
+    "click",
+    () => {
+      const isOpen =
+        arrangementsToggle.getAttribute(
+          "aria-expanded"
+        ) === "true";
+
+      arrangementsToggle.setAttribute(
+        "aria-expanded",
+        String(!isOpen)
+      );
+
+      arrangementsPanel.hidden = isOpen;
+    }
+  );
+}
+
+
+/* =========================================
+   FILTER ITEMS
+========================================= */
+
+function visibleItems() {
+  return items.filter(item => {
+    const matchesShop =
+      shopFilter === "all" ||
+      item.shop === shopFilter;
+
+    const matchesRemaining =
+      !remainingOnly ||
+      !item.completed;
+
+    return (
+      matchesShop &&
+      matchesRemaining
+    );
+  });
+}
+
+
+/* =========================================
+   RENDER SHOPPING LIST
+========================================= */
+
+function renderItems() {
+  const visible =
+    visibleItems();
+
+  $("categoryList").innerHTML =
+    categories
+      .map(([name, icon]) => {
+        const all =
+          items.filter(
+            item =>
+              item.category === name
+          );
+
+        const shown =
+          visible.filter(
+            item =>
+              item.category === name
+          );
+
+        if (
+          shopFilter !== "all" &&
+          !shown.length
+        ) {
+          return "";
+        }
+
+        const done =
+          all.filter(
+            item => item.completed
+          ).length;
+
+        return `
+          <article class="category">
+
+            <button
+              class="category-toggle"
+              aria-expanded="true"
+              type="button"
+            >
+
+              <span class="category-icon">
+                ${icon}
+              </span>
+
+              <span class="category-name">
+
+                <strong>
+                  ${esc(name)}
+                </strong>
+
+                <small>
+                  ${
+                    all.length
+                      ? `${done} of ${all.length} bought`
+                      : "Nothing added yet"
+                  }
+                </small>
+
+              </span>
+
+              <span>⌄</span>
+
+            </button>
+
+            <div class="category-items">
+
+              ${
+                shown.length
+                  ? shown
+                      .map(renderItem)
+                      .join("")
+                  : `
+                    <p class="empty">
+                      No items for this filter.
+                    </p>
+                  `
+              }
+
+            </div>
+
+          </article>
+        `;
+      })
+      .join("") ||
+    `
+      <div class="page-card loading-card">
+        No items match this filter.
+      </div>
+    `;
+}
+
+
+function renderItem(item) {
+  return `
+    <div
+      class="shopping-item
+      ${item.completed ? "done" : ""}"
+    >
+
+      <input
+        class="item-check"
+        type="checkbox"
+        data-toggle="${item.id}"
+        ${item.completed ? "checked" : ""}
+        aria-label="Mark ${esc(item.item)} as bought"
+      >
+
+      <div class="item-copy">
+
+        <span class="item-name">
+          ${esc(item.item)}
+        </span>
+
+        <div class="item-meta">
+
+          ${
+            item.quantity
+              ? `<span>
+                   ${esc(item.quantity)}
+                 </span>`
+              : ""
+          }
+
+          <span class="shop-tag">
+            ${esc(item.shop)}
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="item-actions">
+
+        <button
+          class="item-edit"
+          data-edit="${item.id}"
+          type="button"
+          aria-label="Edit ${esc(item.item)}"
+        >
+          ✎
+        </button>
+
+        <button
+          class="item-delete"
+          data-delete="${item.id}"
+          type="button"
+          aria-label="Delete ${esc(item.item)}"
+        >
+          ×
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* =========================================
+   SHOPPING PROGRESS
+========================================= */
+
+function renderProgress() {
+  const total =
+    items.length;
+
+  const done =
+    items.filter(
+      item => item.completed
+    ).length;
+
+  const percentage =
+    total
+      ? Math.round(
+          (done / total) * 100
+        )
+      : 0;
+
+  $("progressPercent").textContent =
+    `${percentage}%`;
+
+  $("progressFill").style.width =
+    `${percentage}%`;
+
+  $("progressTrack").setAttribute(
+    "aria-valuenow",
+    percentage
+  );
+
+  $("progressText").textContent =
+    total
+      ? `${done} of ${total} items bought`
+      : "No shopping items yet.";
+}
+
+
+/* =========================================
+   SHOP FILTERS
+========================================= */
+
+$("shopFilters").onclick =
+  event => {
+    const button =
+      event.target.closest(
+        "[data-shop]"
+      );
+
+    if (!button) return;
+
+    shopFilter =
+      button.dataset.shop;
+
+    document
+      .querySelectorAll(
+        "[data-shop]"
+      )
+      .forEach(filterButton => {
+        filterButton.classList.toggle(
+          "active",
+          filterButton === button
+        );
+      });
+
+    renderItems();
+  };
+
+
+$("remainingBtn").onclick =
+  () => {
+    remainingOnly =
+      !remainingOnly;
+
+    $("remainingBtn")
+      .classList.toggle(
+        "active",
+        remainingOnly
+      );
+
+    $("remainingBtn").textContent =
+      remainingOnly
+        ? "Showing remaining only"
+        : "Show remaining only";
+
+    renderItems();
+  };
+
+
+/* =========================================
+   SHOPPING ITEM EVENTS
+========================================= */
+
+$("categoryList").onclick =
+  async event => {
+    const categoryToggle =
+      event.target.closest(
+        ".category-toggle"
+      );
+
+    if (categoryToggle) {
+      const card =
+        categoryToggle.closest(
+          ".category"
+        );
+
+      const collapsed =
+        card.classList.toggle(
+          "collapsed"
+        );
+
+      categoryToggle.setAttribute(
+        "aria-expanded",
+        String(!collapsed)
+      );
+
+      return;
+    }
+
+    const checkbox =
+      event.target.closest(
+        "[data-toggle]"
+      );
+
+    if (checkbox) {
+      return toggleItem(
+        checkbox.dataset.toggle,
+        checkbox.checked
+      );
+    }
+
+    const edit =
+      event.target.closest(
+        "[data-edit]"
+      );
+
+    if (edit) {
+      return openItem(
+        edit.dataset.edit
+      );
+    }
+
+    const deleteButton =
+      event.target.closest(
+        "[data-delete]"
+      );
+
+    if (deleteButton) {
+      return deleteItem(
+        deleteButton.dataset.delete
+      );
+    }
+  };
+
+
+/* =========================================
+   MARK ITEM BOUGHT
+========================================= */
+
+async function toggleItem(
+  id,
+  completed
+) {
+  const item =
+    items.find(
+      item => item.id === id
+    );
+
+  if (!item) return;
+
+  item.completed =
+    completed;
+
+  renderItems();
+  renderProgress();
+
+  const { error } =
+    await db
+      .from("shopping_items")
+      .update({
+        completed,
+        completed_at:
+          completed
+            ? new Date().toISOString()
+            : null
+      })
+      .eq("id", id);
+
+  if (error) {
+    item.completed =
+      !completed;
+
+    renderItems();
+    renderProgress();
+
+    toast(
+      "Item could not be updated.",
+      true
+    );
+  }
+}
+
+
+/* =========================================
+   ADD / EDIT ITEM
+========================================= */
+
+function openItem(id = "") {
+  const item =
+    items.find(
+      item => item.id === id
+    );
+
+  $("itemForm").reset();
+
+  $("itemId").value =
+    item?.id || "";
+
+  $("itemName").value =
+    item?.item || "";
+
+  $("itemQuantity").value =
+    item?.quantity || "";
+
+  $("itemShop").value =
+    item?.shop || "Tesco";
+
+  $("itemCategory").value =
+    item?.category ||
+    categories[0][0];
+
+  $("itemModalTitle").textContent =
+    item
+      ? "Edit Shopping Item"
+      : "Add Shopping Item";
+
+  openModal("itemModal");
+}
+
+
+$("addItemBtn").onclick =
+  () => openItem();
+
+
+$("itemForm").onsubmit =
+  async event => {
+    event.preventDefault();
+
+    const id =
+      $("itemId").value;
+
+    const category =
+      $("itemCategory").value;
+
+    const payload = {
+      item:
+        $("itemName")
+          .value
+          .trim(),
+
+      quantity:
+        $("itemQuantity")
+          .value
+          .trim() ||
+        null,
+
+      shop:
+        $("itemShop").value,
+
+      category,
+
+      category_order:
+        categories.findIndex(
+          categoryItem =>
+            categoryItem[0] ===
+            category
+        ) + 1
+    };
+
+    let response;
+
+    if (id) {
+      response =
+        await db
+          .from("shopping_items")
+          .update(payload)
+          .eq("id", id);
+    } else {
+      response =
+        await db
+          .from("shopping_items")
+          .insert({
+            ...payload,
+
+            display_order:
+              items.filter(
+                item =>
+                  item.category ===
+                  category
+              ).length + 1
+          });
+    }
+
+    if (response.error) {
+      toast(
+        "Item could not be saved.",
+        true
+      );
+
+      return;
+    }
+
+    closeModal("itemModal");
+
+    await loadItems();
+
+    toast(
+      id
+        ? "Item updated."
+        : "Item added."
+    );
+  };
+
+
+/* =========================================
+   DELETE ITEM
+========================================= */
+
+async function deleteItem(id) {
+  const item =
+    items.find(
+      item => item.id === id
+    );
+
+  if (!item) return;
+
+  if (
+    !confirm(
+      `Delete "${item.item}"?`
+    )
+  ) {
+    return;
+  }
+
+  const { error } =
+    await db
+      .from("shopping_items")
+      .delete()
+      .eq("id", id);
+
+  if (error) {
+    toast(
+      "Item could not be deleted.",
+      true
+    );
+
+    return;
+  }
+
+  await loadItems();
+
+  toast("Item deleted.");
+}
+
+
+/* =========================================
+   EDIT SHOP ASSIGNMENT
+========================================= */
+
+$("shopsGrid").onclick =
+  event => {
+    const button =
+      event.target.closest(
+        "[data-shop-edit]"
+      );
+
+    if (!button) return;
+
+    const shop =
+      shops.find(
+        shop =>
+          shop.id ===
+          button.dataset.shopEdit
+      );
+
+    if (!shop) return;
+
+    $("shopId").value =
+      shop.id;
+
+    $("shopAssigned").value =
+      shop.assigned_to || "";
+
+    $("shopModalTitle").textContent =
+      `Assign ${shop.name}`;
+
+    openModal("shopModal");
+  };
+
+
+$("shopForm").onsubmit =
+  async event => {
+    event.preventDefault();
+
+    const { error } =
+      await db
+        .from("shopping_shops")
+        .update({
+          assigned_to:
+            $("shopAssigned")
+              .value
+              .trim() ||
+            null
+        })
+        .eq(
+          "id",
+          $("shopId").value
+        );
+
+    if (error) {
+      toast(
+        "Assignment could not be saved.",
+        true
+      );
+
+      return;
+    }
+
+    closeModal("shopModal");
+
+    await loadShops();
+
+    toast(
+      "Assignment updated."
+    );
+  };
+
+
+/* =========================================
+   SUBMIT SUGGESTION
+========================================= */
+
+$("suggestionForm").onsubmit =
+  async event => {
+    event.preventDefault();
+
+    const payload = {
+      item:
+        $("suggestionItem")
+          .value
+          .trim(),
+
+      quantity:
+        $("suggestionQuantity")
+          .value
+          .trim() ||
+        null,
+
+      suggested_by:
+        $("suggestionName")
+          .value
+          .trim(),
+
+      note:
+        $("suggestionNote")
+          .value
+          .trim() ||
+        null,
+
+      status: "pending"
+    };
+
+    $("submitSuggestion").disabled =
+      true;
+
+    const { error } =
+      await db
+        .from(
+          "shopping_suggestions"
+        )
+        .insert(payload);
+
+    $("submitSuggestion").disabled =
+      false;
+
+    if (error) {
+      toast(
+        "Suggestion could not be submitted.",
+        true
+      );
+
+      return;
+    }
+
+    localStorage.setItem(
+      "shoppingSuggestionName",
+      payload.suggested_by
+    );
+
+    $("suggestionForm").reset();
+
+    $("suggestionName").value =
+      payload.suggested_by;
+
+    await loadSuggestions();
+
+    toast(
+      "Suggestion added."
+    );
+  };
+
+
+/* =========================================
+   RENDER SUGGESTIONS
+========================================= */
+
+function renderSuggestions() {
+  $("suggestionCount").textContent =
+    suggestions.length;
+
+  $("suggestionsList").innerHTML =
+    suggestions.length
+      ? suggestions
+          .map(
+            suggestion => `
+              <article class="suggestion">
+
+                <div class="suggestion-top">
+
+                  <h4>
+                    ${esc(suggestion.item)}
+                  </h4>
+
+                  <span>
+                    ${esc(
+                      suggestion.quantity ||
+                      ""
+                    )}
+                  </span>
+
+                </div>
+
+                ${
+                  suggestion.note
+                    ? `
+                      <p class="suggestion-note">
+                        “${esc(suggestion.note)}”
+                      </p>
+                    `
+                    : ""
+                }
+
+                <div class="suggestion-footer">
+
+                  <div>
+
+                    <span class="suggestion-by">
+                      Suggested by
+                      ${esc(
+                        suggestion.suggested_by
+                      )}
+                    </span>
+
+                    <span class="suggestion-date">
+                      ${
+                        new Intl.DateTimeFormat(
+                          "en-GB",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            hour: "2-digit",
+                            minute: "2-digit"
+                          }
+                        ).format(
+                          new Date(
+                            suggestion.created_at
+                          )
+                        )
+                      }
+                    </span>
+
+                  </div>
+
+                  <div class="suggestion-actions">
+
+                    <button
+                      class="suggestion-action"
+                      data-add-suggestion="${suggestion.id}"
+                      type="button"
+                    >
+                      + Add
+                    </button>
+
+                    <button
+                      class="suggestion-action"
+                      data-sort="${suggestion.id}"
+                      type="button"
+                    >
+                      Sorted
+                    </button>
+
+                    <button
+                      class="suggestion-action danger"
+                      data-delete-suggestion="${suggestion.id}"
+                      type="button"
+                    >
+                      Delete
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </article>
+            `
+          )
+          .join("")
+      : `
+        <p class="empty">
+          No pending suggestions yet.
+        </p>
+      `;
+}
+
+
+/* =========================================
+   SUGGESTION ACTIONS
+========================================= */
+
+$("suggestionsList").onclick =
+  async event => {
+    const add =
+      event.target.closest(
+        "[data-add-suggestion]"
+      );
+
+    if (add) {
+      return openSuggestion(
+        add.dataset.addSuggestion
+      );
+    }
+
+    const sorted =
+      event.target.closest(
+        "[data-sort]"
+      );
+
+    if (sorted) {
+      return resolveSuggestion(
+        sorted.dataset.sort,
+        "sorted"
+      );
+    }
+
+    const deleteButton =
+      event.target.closest(
+        "[data-delete-suggestion]"
+      );
+
+    if (deleteButton) {
+      return deleteSuggestion(
+        deleteButton.dataset
+          .deleteSuggestion
+      );
+    }
+  };
+
+
+function openSuggestion(id) {
+  const suggestion =
+    suggestions.find(
+      suggestion =>
+        suggestion.id === id
+    );
+
+  if (!suggestion) return;
+
+  $("suggestionAddId").value =
+    suggestion.id;
+
+  $("suggestionAddItem").value =
+    suggestion.item;
+
+  $("suggestionAddQuantity").value =
+    suggestion.quantity || "";
+
+  $("suggestionAddShop").value =
+    "Tesco";
+
+  $("suggestionAddCategory").value =
+    categories[0][0];
+
+  $("suggestionAddTitle").textContent =
+    `Add “${suggestion.item}”`;
+
+  openModal(
+    "suggestionAddModal"
+  );
+}
+
+
+$("suggestionAddForm").onsubmit =
+  async event => {
+    event.preventDefault();
+
+    const category =
+      $("suggestionAddCategory")
+        .value;
+
+    const payload = {
+      item:
+        $("suggestionAddItem")
+          .value
+          .trim(),
+
+      quantity:
+        $("suggestionAddQuantity")
+          .value
+          .trim() ||
+        null,
+
+      shop:
+        $("suggestionAddShop")
+          .value,
+
+      category,
+
+      category_order:
+        categories.findIndex(
+          categoryItem =>
+            categoryItem[0] ===
+            category
+        ) + 1,
+
+      display_order:
+        items.filter(
+          item =>
+            item.category ===
+            category
+        ).length + 1
+    };
+
+    const { error } =
+      await db
+        .from("shopping_items")
+        .insert(payload);
+
+    if (error) {
+      toast(
+        "Suggestion could not be added.",
+        true
+      );
+
+      return;
+    }
+
+    await resolveSuggestion(
+      $("suggestionAddId").value,
+      "added",
+      false
+    );
+
+    closeModal(
+      "suggestionAddModal"
+    );
+
+    await loadItems();
+
+    toast(
+      "Suggestion added to the list."
+    );
+  };
+
+
+async function resolveSuggestion(
+  id,
+  status,
+  notify = true
+) {
+  const { error } =
+    await db
+      .from(
+        "shopping_suggestions"
+      )
+      .update({
+        status,
+        resolved_at:
+          new Date().toISOString()
+      })
+      .eq("id", id);
+
+  if (error) {
+    toast(
+      "Suggestion could not be updated.",
+      true
+    );
+
+    return;
+  }
+
+  await loadSuggestions();
+
+  if (notify) {
+    toast(
+      "Suggestion marked as sorted."
+    );
+  }
+}
+
+
+async function deleteSuggestion(id) {
+  const suggestion =
+    suggestions.find(
+      suggestion =>
+        suggestion.id === id
+    );
+
+  if (!suggestion) return;
+
+  if (
+    !confirm(
+      `Delete "${suggestion.item}"?`
+    )
+  ) {
+    return;
+  }
+
+  const { error } =
+    await db
+      .from(
+        "shopping_suggestions"
+      )
+      .delete()
+      .eq("id", id);
+
+  if (error) {
+    toast(
+      "Suggestion could not be deleted.",
+      true
+    );
+
+    return;
+  }
+
+  await loadSuggestions();
+
+  toast(
+    "Suggestion deleted."
+  );
+}
+
+
+/* =========================================
+   EXPORT SHOPPING LIST TO TXT
+========================================= */
+
+const exportTxtBtn =
+  $("exportTxtBtn");
+
+if (exportTxtBtn) {
+  exportTxtBtn.addEventListener(
+    "click",
+    exportShoppingList
+  );
+}
+
+
+function exportShoppingList() {
+  const lines = [];
+
+  lines.push(
+    "WILTSHIRE FAMILY STAYCATION"
+  );
+
+  lines.push(
+    "SHOPPING LIST"
+  );
+
+  lines.push(
+    "17–21 August 2026"
+  );
+
+  lines.push("");
+  lines.push(
+    "=============================="
+  );
+  lines.push("");
+
+  categories.forEach(
+    ([categoryName]) => {
+      const categoryItems =
+        items.filter(
+          item =>
+            item.category ===
+            categoryName
+        );
+
+      if (
+        !categoryItems.length
+      ) {
+        return;
+      }
+
+      lines.push(
+        categoryName.toUpperCase()
+      );
+
+      lines.push(
+        "-".repeat(
+          categoryName.length
+        )
+      );
+
+      categoryItems.forEach(
+        item => {
+          const status =
+            item.completed
+              ? "[BOUGHT]"
+              : "[ ]";
+
+          const quantity =
+            item.quantity
+              ? ` — ${item.quantity}`
+              : "";
+
+          const shop =
+            item.shop
+              ? ` (${item.shop})`
+              : "";
+
+          lines.push(
+            `${status} ${item.item}${quantity}${shop}`
+          );
+        }
+      );
+
+      lines.push("");
+    }
+  );
+
+  const total =
+    items.length;
+
+  const bought =
+    items.filter(
+      item => item.completed
+    ).length;
+
+  lines.push(
+    "=============================="
+  );
+
+  lines.push(
+    `Progress: ${bought} of ${total} items bought`
+  );
+
+  const blob =
+    new Blob(
+      [lines.join("\n")],
+      {
+        type:
+          "text/plain;charset=utf-8"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+
+  link.download =
+    "wiltshire-shopping-list.txt";
+
+  document.body.appendChild(
+    link
+  );
+
+  link.click();
+
+  link.remove();
+
+  URL.revokeObjectURL(url);
+
+  toast(
+    "Shopping list exported."
+  );
+}
+
+
+/* =========================================
+   MODALS
+========================================= */
+
+document.onclick =
+  event => {
+    const button =
+      event.target.closest(
+        "[data-close]"
+      );
+
+    if (button) {
+      closeModal(
+        button.dataset.close
+      );
+
+      return;
+    }
+
+    if (
+      event.target.classList.contains(
+        "modal"
+      )
+    ) {
+      closeModal(
+        event.target.id
+      );
+    }
+  };
+
+
+document.onkeydown =
+  event => {
+    if (
+      event.key === "Escape"
+    ) {
+      document
+        .querySelectorAll(
+          ".modal:not([hidden])"
+        )
+        .forEach(
+          modal =>
+            closeModal(
+              modal.id
+            )
+        );
+    }
+  };
+
+
+/* =========================================
+   REALTIME UPDATES
+========================================= */
+
+function setupRealtime() {
+  if (channel) return;
+
+  channel =
+    db
+      .channel(
+        "shopping-live"
+      )
+
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table:
+            "shopping_items"
+        },
+        loadItems
+      )
+
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table:
+            "shopping_suggestions"
+        },
+        loadSuggestions
+      )
+
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table:
+            "shopping_shops"
+        },
+        loadShops
+      )
+
+      .subscribe();
+}
+
+
+/* =========================================
+   INITIALISE
+========================================= */
+
 fillCategories();
-$('suggestionName').value=localStorage.getItem('shoppingSuggestionName')||'';
+
+$("suggestionName").value =
+  localStorage.getItem(
+    "shoppingSuggestionName"
+  ) || "";
+
 setupShoppingView();
-requestAnimationFrame(()=>document.body.classList.add('shopping-page-ready'));
+
+requestAnimationFrame(
+  () =>
+    document.body.classList.add(
+      "shopping-page-ready"
+    )
+);
+
 loadAll();
