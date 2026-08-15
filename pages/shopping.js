@@ -22,6 +22,7 @@ const categories = [
   ["Meat & Fish", "🥩"],
   ["Fruit & Vegetables", "🥬"],
   ["Dairy & Eggs", "🥛"],
+  ['Frozen','❄️'],
   ["Bakery", "🍞"],
   ["Breakfast", "🥣"],
   ["Cupboard", "🥫"],
